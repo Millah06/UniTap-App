@@ -1,0 +1,1309 @@
+{
+  "MTN" : [
+    {
+      "category" : "Hot",
+      "plans": [
+        {
+          "variation_code": "mtn-2gb-ex-750",
+          "name": "2GB",
+          "variation_amount": "750.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "mtn-xtra-1000",
+          "name": "2GB",
+          "variation_amount": "1500.00",
+          "social" : "+ 2mins",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-3.2gb-1000",
+          "name": "3.2GB",
+          "variation_amount": "1000.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "mtn-5.5gb-3500",
+          "name": "7GB",
+          "variation_amount": "3900.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-20-5000",
+          "name": "20GB",
+          "variation_amount": "5600.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-hynetflex-9000-30",
+          "name": "30GB",
+          "variation_amount": "10000.00",
+          "social" : "Broadband",
+          "duration": "1 month"
+        }
+      ]
+    },
+    {
+      "category" : "Company Plan",
+      "plans" :  [
+        {
+          "variation_code": "mtn-120gb-24000",
+          "name": "120GB",
+          "variation_amount": "25000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-150gb-40000",
+          "name": "150GB",
+          "variation_amount": "40000.00",
+          "duration": "60 days"
+        },
+        {
+          "variation_code": "mtn-200gb-50000",
+          "name": "200GB",
+          "variation_amount": "55000.00",
+          "duration": "60 days"
+        },
+        {
+          "variation_code": "mtn-hynetflex-75000-90",
+          "name": "450GB",
+          "variation_amount": "77000.00",
+          "social" : "Broadband",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "mtn-480gb-90000",
+          "name": "480GB",
+          "variation_amount": "90000.00",
+          "duration": "90 days"
+        }
+      ]
+    },
+    {
+      "category" : "Daily",
+      "plans":  [
+        {
+          "variation_code": "mtn-10mb-100",
+          "name": "110MB",
+          "variation_amount": "100.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "mtn-230mb-200",
+          "name": "230MB",
+          "variation_amount": "200.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "mtn-500mb-ex-350",
+          "name": "500MB",
+          "variation_amount": "350.00",
+          "duration": "1 day"
+        },
+
+        {
+          "variation_code": "mtn-1gb-350",
+          "name": "1GB",
+          "variation_amount": "500.00",
+          "social" : "+ 1.5mins",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "mtn-2-5gb-ex-600",
+          "name": "1.5GB",
+          "variation_amount": "600.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "mtn-2gb-ex-750",
+          "name": "2GB",
+          "variation_amount": "750.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "mtn-2.5-750",
+          "name": "2.5GB",
+          "variation_amount": "750.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "mtn-2-5gb-900",
+          "name": "2.5GB",
+          "variation_amount": "900.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "mtn-3.2gb-1000",
+          "name": "3.2GB",
+          "variation_amount": "1000.00",
+          "duration": "2 days"
+        }
+      ]
+    },
+    {
+      "category" : "Weekly",
+      "plans": [
+        {
+          "variation_code": "mtn-1500mb-1000",
+          "name": "1.5GB",
+          "variation_amount": "1000.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-3.5gb-1500",
+          "name": "3.5GB",
+          "variation_amount": "1500.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-1800mb-1500",
+          "name": "1.8GB",
+          "variation_amount": "1500.00",
+          "social" : "+ 6mins & 5 SMS",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-1gb-600",
+          "name": "1GB",
+          "variation_amount": "800.00",
+          "social" : "+ 5mins",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-7gb-3000",
+          "name": "6GB",
+          "variation_amount": "2500.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-11gb-3500",
+          "name": "11GB",
+          "variation_amount": "3500.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-12.5gb-5500",
+          "name": "12.5GB",
+          "variation_amount": "5500.00",
+          "social" : "+ 36mins & 15 SMS",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-20-5000",
+          "name": "20GB",
+          "variation_amount": "5600.00",
+          "duration": "7 days"
+        }
+      ]
+    },
+    {
+      "category" : "Monthly",
+      "plans": [
+        {
+          "variation_code": "mtn-xtra-1000",
+          "name": "2GB",
+          "variation_amount": "1500.00",
+          "social" : "+ 2mins",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-2.7gb-2000",
+          "name": "2.7GB",
+          "variation_amount": "2000.00",
+          "social" : "+ 2mins & 200mb Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-3.5gb-2500",
+          "name": "3.5GB",
+          "variation_amount": "2500.00",
+          "social" : "+ 5mins",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-5.5gb-3500",
+          "name": "7GB",
+          "variation_amount": "3900.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-8gb-ex-3000",
+          "name": "10GB",
+          "variation_amount": "4500.00",
+          "social" : "+ 10mins",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-11gb-5000",
+          "name": "12.5GB",
+          "variation_amount": "5500.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-data-6500",
+          "name": "16.5GB",
+          "variation_amount": "6500.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-20gb-7500",
+          "name": "20GB",
+          "variation_amount": "7500.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-25gb-9000",
+          "name": "25GB",
+          "variation_amount": "9000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-32gb-11000",
+          "name": "36GB",
+          "variation_amount": "11000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-65gb-ex-16000",
+          "name": "65GB",
+          "variation_amount": "16000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-75gb-20000",
+          "name": "75GB",
+          "variation_amount": "18000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-120gb-24000",
+          "name": "120GB",
+          "variation_amount": "25000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-hynetflex-14500-30",
+          "name": "60GB",
+          "variation_amount": "15500.00",
+          "social" : "HyNetFlex",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "mtn-hynetflex-9000-30",
+          "name": "30GB",
+          "variation_amount": "10000.00",
+          "social" : "Broadband",
+          "duration": "1 month"
+        }
+      ]
+    },
+    {
+      "category" : "Month +",
+      "plans" : [
+        {
+          "variation_code": "mtn-150gb-40000",
+          "name": "150GB",
+          "variation_amount": "40000.00",
+          "duration": "60 days"
+        },
+        {
+          "variation_code": "mtn-200gb-50000",
+          "name": "200GB",
+          "variation_amount": "55000.00",
+          "duration": "60 days"
+        },
+        {
+          "variation_code": "mtn-hynetflex-75000-90",
+          "name": "450GB",
+          "variation_amount": "77000.00",
+          "social" : "Broadband",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "mtn-480gb-90000",
+          "name": "480GB",
+          "variation_amount": "90000.00",
+          "duration": "90 days"
+        }
+      ]
+    },
+    {
+      "category" : "XtraValue",
+      "plans" : [
+        {
+          "variation_code": "mtn-xtrabundle-500",
+          "name": "600MB",
+          "variation_amount": "500.00",
+          "social" : "Xtra Bundle",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "mtn-1500mb-ex-1200",
+          "name": "2.7GB",
+          "variation_amount": "3000.00",
+          "social" : "Xtra Bundle",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "mtn-xtra-10000",
+          "name": "Xtradata",
+          "variation_amount": "11000.00",
+          "duration": "Xtradata"
+        },
+        {
+          "variation_code": "mtn-xtra-3500",
+          "name": "Xtradata",
+          "variation_amount": "3500.00",
+          "duration": "Xtradata"
+        }
+      ]
+    },
+    {
+      "category" : "Social",
+      "plans" : [
+        {
+          "variation_code": "mtn-500mb-500",
+          "name": "500MB",
+          "variation_amount": "500.00",
+          "social" : "1gb YouTube",
+          "duration": "7 days"
+        }
+      ]
+    }
+  ],
+  "Airtel" : [
+    {
+      "category" : "Hot",
+      "plans":  [
+        {
+          "variation_code": "airt-social-300-3",
+          "name": "1GB Social",
+          "variation_amount": "300.00",
+          "social" : "Social",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "airt-750-2",
+          "name": "2GB Binge",
+          "variation_amount": "750.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        },
+        {
+        "variation_code": "airt-1500-2",
+        "name": "5GB Binge",
+        "variation_amount": "1500.00",
+        "social" : "Youtube & Social",
+        "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-600",
+          "name": "1.5GB Binge",
+          "variation_amount": "600.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-1000-2",
+          "name": "3GB Binge",
+          "variation_amount": "1000.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        }
+      ]
+    },
+    {
+      "category" : "Daily",
+      "plans":  [
+        {
+          "variation_code": "airt-75-1",
+          "name": "75MB",
+          "variation_amount": "75.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "airt-300-1",
+          "name": "300MB",
+          "variation_amount": "300.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "airt-social-300-3",
+          "name": "1GB Social",
+          "variation_amount": "300.00",
+          "social" : "Social",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "airt-750-2",
+          "name": "2GB Binge",
+          "variation_amount": "750.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-50",
+          "name": "250MB(12 - 5 AM)",
+          "variation_amount": "50.00",
+          "social" : "Night Plan",
+          "duration": "6 hours"
+        },
+        {
+          "variation_code": "airt-100",
+          "name": "200MB",
+          "variation_amount": "100.00",
+          "social" : "Social",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-200",
+          "name": "200MB",
+          "variation_amount": "200.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-daily-100",
+          "name": "100MB",
+          "variation_amount": "100.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "airt-1500-2",
+          "name": "5GB Binge",
+          "variation_amount": "1500.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-600",
+          "name": "1.5GB Binge",
+          "variation_amount": "600.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "airt-1000-2",
+          "name": "3GB Binge",
+          "variation_amount": "1000.00",
+          "social" : "Youtube & Social",
+          "duration": "2 days"
+        }
+      ]
+    },
+    {
+      "category" : "Weekly",
+      "plans":  [
+        {
+          "variation_code": "airt-500",
+          "name": "500MB",
+          "variation_amount": "500.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "airt-1000-7",
+          "name": "1.5GB",
+          "variation_amount": "1000.00",
+          "social" : "Youtube & Social",
+          "duration": "7 Days"
+        },
+        {
+          "variation_code": "airt-1500-7",
+          "name": "3GB",
+          "variation_amount": "1500.00",
+          "social" : "Youtube & Social",
+          "duration": "7 Days"
+        },
+        {
+          "variation_code": "airt-social-500-7",
+          "name": "1.5GB",
+          "variation_amount": "500.00",
+          "social" : "Social",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "airt-800-7",
+          "name": "1GB",
+          "variation_amount": "800.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "airt-3000-7",
+          "name": "8.5GB",
+          "social": "Youtube & Social",
+          "variation_amount": "3000.00",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "airt-5000-7",
+          "name": "18GB",
+          "social": "Youtube & Social",
+          "variation_amount": "5000.00",
+          "duration": "Yes"
+        },
+        {
+          "variation_code": "airt-2500-7",
+          "name": "6GB",
+          "social": "Youtube & Social",
+          "variation_amount": "2500.00",
+          "duration": "Yes"
+        }
+      ]
+    },
+    {
+      "category" : "Company Plan",
+      "plans" : [
+        {
+          "variation_code": "airt-40000",
+          "name": "200GB",
+          "variation_amount": "40000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-20000",
+          "name": "100GB",
+          "variation_amount": "20000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-60000",
+          "name": "350GB",
+          "variation_amount": "60000.00",
+          "social" : "Youtube & Social",
+          "duration": "120 days"
+        },
+        {
+          "variation_code": "airt-50000",
+          "name": "200GB",
+          "variation_amount": "50000.00",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "airt-100000",
+          "name": "400GB Data",
+          "variation_amount": "100000.00",
+          "duration": "365 days"
+        }
+      ]
+    },
+    {
+      "category" : "Monthly",
+      "plans": [
+        {
+          "variation_code": "airt-2000",
+          "name": "3GB",
+          "variation_amount": "2000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-3000",
+          "name": "6GB",
+          "variation_amount": "3000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-4000",
+          "name": "10GB",
+          "variation_amount": "4000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-5000",
+          "name": "13GB",
+          "variation_amount": "5000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-10000",
+          "name": "35GB",
+          "variation_amount": "10000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-15000",
+          "name": "60GB",
+          "variation_amount": "15000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-40000",
+          "name": "200GB",
+          "variation_amount": "40000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-20000",
+          "name": "100GB",
+          "variation_amount": "20000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-2500",
+          "name": "4GB",
+          "variation_amount": "2500.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-8000",
+          "name": "25GB",
+          "variation_amount": "8000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-30000",
+          "name": "150GB",
+          "variation_amount": "30000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-6000-30",
+          "name": "18GB",
+          "variation_amount": "6000.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-1500-30",
+          "name": "2GB",
+          "variation_amount": "1500.00",
+          "social" : "Youtube & Social",
+          "duration": "1 month"
+        }
+      ]
+    },
+    {
+      "category" : "3 Month +",
+      "plans" : [
+        {
+          "variation_code": "airt-60000",
+          "name": "350GB",
+          "variation_amount": "60000.00",
+          "social" : "Youtube & Social",
+          "duration": "120 days"
+        },
+        {
+          "variation_code": "airt-50000",
+          "name": "200GB",
+          "variation_amount": "50000.00",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "airt-100000",
+          "name": "400GB Data",
+          "variation_amount": "100000.00",
+          "duration": "365 days"
+        }
+      ]
+    },
+    {
+      "category" : "Social",
+      "plans" : [
+        {
+          "variation_code": "airt-60000",
+          "name": "350GB",
+          "variation_amount": "60000.00",
+          "social" : "Youtube & Social",
+          "duration": "120 days"
+        },
+        {
+          "variation_code": "airt-social-500-7",
+          "name": "1.5GB",
+          "variation_amount": "500.00",
+          "social" : "Social",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "airt-social-300-3",
+          "name": "1GB Social",
+          "variation_amount": "300.00",
+          "social" : "Social",
+          "duration": "3 days"
+        }
+      ]
+    },
+    {
+      "category" : "Router",
+      "plans" : [
+        {
+          "variation_code": "airt-mifi-20000-30",
+          "name": "100GB Unlimited",
+          "variation_amount": "20000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-mifi-30000-30",
+          "name": "Unlimited 20MBPS",
+          "variation_amount": "30000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-mifi-50000-30",
+          "name": "Unlimited 60MBPS",
+          "variation_amount": "50000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-mifi-80000-90",
+          "name": "Unlimited 60MBPS",
+          "variation_amount": "80000.00",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "airt-mifi-135000-90",
+          "name": "Unlimited 60MBPS Data",
+          "variation_amount": "135000.00",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "airt-mifi-150000-120",
+          "name": "Unlimited 20MBPS",
+          "variation_amount": "150000.00",
+          "duration": "120 days"
+        }
+      ]
+    },
+    {
+      "category" : "MiFi",
+      "plans" : [
+        {
+          "variation_code": "airt-mifi-5000-30",
+          "name": "13GB MIFI 5",
+          "variation_amount": "5000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-mifi-10000-30",
+          "name": "35GB MIFI 10",
+          "variation_amount": "10000.00",
+          "duration": "1 month"
+        },
+        {
+          "variation_code": "airt-mifi-15000-30",
+          "name": "60GB MIFI 15",
+          "variation_amount": "15000.00",
+          "duration": "1 month"
+        }
+      ]
+    }
+  ],
+  "Glo" : [
+    {
+      "category" : "Hot",
+      "plans":  [
+        {
+          "variation_code": "glo-daily-50",
+          "name": "45MB",
+          "variation_amount": "50.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-daily-100",
+          "name": "125MB",
+          "variation_amount": "100.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-2days-200",
+          "name": "260MB",
+          "variation_amount": "200.00",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "glo-2weeks-500",
+          "name": "1.5GB",
+          "variation_amount": "500.00",
+          "duration": "14 days"
+        },
+        {
+          "variation_code": "glo-dg-320",
+          "name": "1GB",
+          "variation_amount": "450.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-960",
+          "name": "3GB",
+          "variation_amount": "1350.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-3100",
+          "name": "10GB",
+          "variation_amount": "4500.00",
+          "social" : "SME",
+          "duration": "30 days"
+        }
+      ]
+    },
+    {
+      "category" : "Daily",
+      "plans":  [
+        {
+          "variation_code": "glo-daily-50",
+          "name": "45MB",
+          "variation_amount": "50.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-daily-100",
+          "name": "125MB",
+          "variation_amount": "100.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-2days-200",
+          "name": "260MB",
+          "variation_amount": "200.00",
+          "duration": "2 days"
+        }
+      ]
+    },
+    {
+      "category" : "Weekly",
+      "plans":  [
+        {
+          "variation_code": "glo-dg-70",
+          "name": "200MB",
+          "variation_amount": "100.00",
+          "social": "SME",
+          "duration": "14 days"
+        },
+        {
+          "variation_code": "glo-dg-160-14",
+          "name": "500MB",
+          "variation_amount": "245.00",
+          "social": "SME",
+          "duration": "14 days"
+        },
+        {
+          "variation_code": "glo-2weeks-500",
+          "name": "1.5GB",
+          "variation_amount": "500.00",
+          "duration": "14 days"
+        }
+      ]
+    },
+    {
+      "category" : "Monthly",
+      "plans": [
+        {
+          "variation_code": "glo-dg-320",
+          "name": "1GB",
+          "variation_amount": "450.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-960",
+          "name": "3GB",
+          "variation_amount": "1350.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-3100",
+          "name": "10GB",
+          "variation_amount": "4500.00",
+          "social" : "SME",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-640",
+          "name": "2GB",
+          "variation_amount": "950.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-dg-1600",
+          "name": "5GB",
+          "variation_amount": "2250.00",
+          "social" : "SME",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-1000",
+          "name": "2.6GB",
+          "variation_amount": "1000.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-1500",
+          "name": "5GB",
+          "variation_amount": "1800.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-2000",
+          "name": "6.25GB",
+          "variation_amount": "2100.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-2500",
+          "name": "7.5GB",
+          "variation_amount": "2500.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-3000",
+          "name": "11GB",
+          "variation_amount": "3300.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-4000",
+          "name": "14GB",
+          "variation_amount": "4800.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-5000",
+          "name": "18GB",
+          "variation_amount": "5800.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-8000",
+          "name": "29GB",
+          "variation_amount": "8500.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-10000",
+          "name": "40GB",
+          "variation_amount": "11000.00",
+          "duration": "Yes"
+        },
+        {
+          "variation_code": "glo-monthly-15000",
+          "name": "69GB",
+          "variation_amount": "17500.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-monthly-20000",
+          "name": "110GB",
+          "variation_amount": "21500.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-sunday-200",
+          "name": "1.75GB - Sunday N200",
+          "variation_amount": "200.00",
+          "duration": "Yes"
+        }
+      ]
+    },
+    {
+      "category" : "Mega",
+      "plans" : [
+        {
+          "variation_code": "glo-mega-30000",
+          "name": "165GB",
+          "variation_amount": "30000.00",
+          "social" : "Mega",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-mega-36000",
+          "name": "220GB",
+          "variation_amount": "36000.00",
+          "social" : "Mega",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-mega-50000",
+          "name": "320G",
+          "variation_amount": "52000.00",
+          "social" : "Mega",
+          "duration": "60 days"
+        },
+        {
+          "variation_code": "glo-mega-60000",
+          "name": "380GB",
+          "variation_amount": "65000.00",
+          "social" : "Mega",
+          "duration": "90 days"
+        },
+        {
+          "variation_code": "glo-mega-75000",
+          "name": "475GB",
+          "variation_amount": "75500.00",
+          "social" : "Mega",
+          "duration": "90 days"
+        }
+      ]
+    },
+    {
+      "category" : "Special",
+      "plans" : [
+        {
+          "variation_code": "glo-special-500",
+          "name": "2GB",
+          "variation_amount": "500.00",
+          "social" : "Special",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-special-1500",
+          "name": "6GB",
+          "variation_amount": "1500.00",
+          "social" : "Special",
+          "duration": "7 days"
+        }
+      ]
+    },
+    {
+      "category" : "My-G",
+      "plans" : [
+        {
+          "variation_code": "glo-social-oneoff-100",
+          "name": "300MB",
+          "variation_amount": "100.00",
+          "social" : "Social",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-social-oneoff-300",
+          "name": "N300 1GB",
+          "variation_amount": "300.00",
+          "social" : "Social",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "glo-social-oneoff-500",
+          "name": "1.5GB",
+          "variation_amount": "500.00",
+          "social" : "Social",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "glo-social-oneoff-1000",
+          "name": "3.5GB",
+          "variation_amount": "1000.00",
+          "social" : "Social",
+          "duration": "30 days"
+        }
+      ]
+    },
+    {
+      "category" : "TV",
+      "plans" : [
+        {
+          "variation_code": "glo-tv-1400",
+          "name": " 6GB",
+          "variation_amount": "1400.00",
+          "social" : "Glo TV VOD",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-tv-900",
+          "name": "2GB",
+          "variation_amount": "900.00",
+          "social" : "Glo TV Lite",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "glo-tv-3200",
+          "name": "6GB",
+          "variation_amount": "3200.00",
+          "social" : "Glo TV MAX",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-tv-150",
+          "name": "500MB",
+          "variation_amount": "150.00",
+          "social" : "Glo TV VOD",
+          "duration": "3 days"
+        }
+      ]
+    },
+    {
+      "category" : "Campus",
+      "plans" : [
+        {
+          "variation_code": "glo-campus-booster-100",
+          "name": "235MB",
+          "variation_amount": "100.00",
+          "social" : "Camp-Boost",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "glo-campus-booster-200",
+          "name": "480MB",
+          "variation_amount": "200.00",
+          "social" : "Camp-Boost",
+          "duration": "2 days"
+        },
+        {
+          "variation_code": "glo-campus-booster-500",
+          "name": "2GB",
+          "variation_amount": "500.00",
+          "social" : "Camp-Boost",
+          "duration": "7 days"
+        },
+        {
+          "variation_code": "glo-campus-booster-1000",
+          "name": "4.2GB",
+          "variation_amount": "1000.00",
+          "social" : "Camp-Boost",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-campus-booster-2000",
+          "name": "10.6GB",
+          "variation_amount": "2100.00",
+          "social" : "Camp-Boost",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "glo-campus-booster-5000",
+          "name": "32GB",
+          "variation_amount": "5200.00",
+          "social" : "Camp-Boost",
+          "duration": "30 days"
+        }
+      ]
+    },
+    {
+      "category" : "Weekend",
+      "plans" : [
+        {
+          "variation_code": "glo-weekend-500",
+          "name": "2.2GB",
+          "variation_amount": "500.00",
+          "social" : "Weekend",
+          "duration": "2 days"
+        }
+      ]
+    }
+  ],
+  "9Mobile" : [
+    {
+      "category" : "Hot",
+      "plans":  [
+        {
+          "variation_code": "eti-300",
+          "name": "1GB + 100MB",
+          "variation_amount": "350.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "eti-500-3",
+          "name": "2GB +100MB",
+          "variation_amount": "500.00",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "eti-5000",
+          "name": "22GB",
+          "variation_amount": "5000.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "eti-10000",
+          "name": "50GB",
+          "variation_amount": "10000.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "eti-3000",
+          "name": "10GB",
+          "variation_amount": "3000.00",
+          "social" : "+ 5GB Night",
+          "duration": "30 days"
+        }
+
+      ]
+    },
+    {
+      "category" : "Daily",
+      "plans":  [
+        {
+          "variation_code": "eti-100",
+          "name": "83MB",
+          "variation_amount": "100.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "eti-150",
+          "name": "150MB ",
+          "variation_amount": "150.00",
+          "social" : "Night(100mb +)",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "eti-500",
+          "name": "650MB",
+          "variation_amount": "500.00",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "eti-50",
+          "name": "40MB",
+          "variation_amount": "50.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "eti-300",
+          "name": "1GB + 100MB",
+          "variation_amount": "350.00",
+          "duration": "1 day"
+        },
+        {
+          "variation_code": "eti-500-3",
+          "name": "2GB +100MB",
+          "variation_amount": "500.00",
+          "duration": "3 days"
+        },
+        {
+          "variation_code": "eti-100-social",
+          "name": "200MB",
+          "variation_amount": "100.00",
+          "social" : "Social",
+          "duration": "1 day"
+        }
+      ]
+    },
+    {
+      "category" : "Monthly",
+      "plans": [
+        {
+          "variation_code": "eti-4000",
+          "name": "15GB",
+          "variation_amount": "4000.00",
+          "social" : "+ 3.5GB Night",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "eti-5000",
+          "name": "22GB",
+          "variation_amount": "5000.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "eti-10000",
+          "name": "50GB",
+          "variation_amount": "10000.00",
+          "duration": "30 days"
+        },
+        {
+          "variation_code": "eti-3000",
+          "name": "10GB",
+          "variation_amount": "3000.00",
+          "social" : "+ 5GB Night",
+          "duration": "30 days"
+        }
+
+      ]
+    }
+  ]
+}

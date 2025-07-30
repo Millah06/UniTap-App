@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/axios": "^0.9.36"
+  },
+  "dependencies": {
+    "firebase": "^11.10.0",
+    "firebase-functions": "^6.3.2"
+  }
+}
