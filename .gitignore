@@ -55,3 +55,8 @@ build/
 *.env
 android/gradle/caches/
 android/gradle/wrapper/dists/
+bash
+android/app/google-services.json
+.env
+firebase.jsonbash
+firebase.json
