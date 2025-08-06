@@ -4,15 +4,10 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:everywhere/components/dash_line.dart';
 import 'package:everywhere/components/flush_bar_message.dart';
 import 'package:everywhere/components/reusable_card.dart';
-import 'package:everywhere/components/zig-za.dart';
 import 'package:everywhere/services/receipt_builder.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../components/transacrtion_pin.dart';
+import '../components/view_receipt.dart';
 import '../components/wallet_balance.dart';
 import '../constraints/constants.dart';
 import 'brain.dart';
@@ -325,7 +321,7 @@ class TransactionService {
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => viewReceipt(context, receiptData!) ));
+                            MaterialPageRoute(builder: (context) => ViewReceipt(receiptData: receiptData!,) ));
                       },
                       child: ReusableCardReceipt(
                         text: 'View Receipt',

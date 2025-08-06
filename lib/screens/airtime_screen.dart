@@ -6,9 +6,12 @@ import 'package:everywhere/constraints/constants.dart';
 import 'package:everywhere/services/purchase_service.dart';
 import 'package:everywhere/services/transaction_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../components/textInput_formater.dart';
 import '../services/brain.dart';
 
 class AirtimeScreen extends StatefulWidget {
@@ -132,6 +135,10 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                     }
                     return null;
                   },
+                  inputFormatters: [
+                     FilteringTextInputFormatter.digitsOnly,
+                    TextFieldFormater()
+                  ],
                 ),
                 SizedBox(height: 20,),
                 Row(
@@ -144,23 +151,24 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50)
                       ),
                         onPressed: () {
+                        print(_amountController.text);
                         if (_formKey.currentState!.validate()) {
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
                             builder: (context) =>
                                 ConfirmationPage(
-                                    productName: '$_selectedNetwork airtime',
-                                    amount: _amountController.text,
-                                    recipientMobile: _phoneController.text,
+                                    productName: '$_selectedNetwork Airtime',
+                                    amount: _amountController.text.replaceAll(',', ''),
+                                    recipientMobile: '0${_phoneController.text}',
                                   onTap: () {
                                     Map? data;
                                        TransactionService.handlePurchase(
-                                         amount: _amountController.text,
+                                         amount: _amountController.text.replaceAll(',', ''),
                                            buildData: (Map<String, dynamic> response) {
                                            return {
                                              'Product Name' : '$_selectedNetwork Airtime',
-                                             'Amount' : '${_amountController.text} NGN',
+                                             'Amount' : '${_amountController.text.replaceAll(',', '')} NGN',
                                              'Phone Number' : '0${_phoneController.text}',
                                              'Transaction ID' : '${response['transaction_ID']}'
                                            };
@@ -188,7 +196,8 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                           );
                         }
                         },
-                        child: Text('Proceed', style: TextStyle(color: Colors.white),)
+                        child: Text('Proceed', style: GoogleFonts.inter(
+                            color: Colors.black, fontWeight: FontWeight.bold),)
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(

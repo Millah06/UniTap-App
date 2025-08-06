@@ -1,5 +1,6 @@
 import 'package:everywhere/screens/bottom_navigation/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../components/edit2.dart';
 import '../edit_template.dart';
@@ -145,14 +146,14 @@ class TemplateSelectionScreen extends StatelessWidget {
         child: Scaffold(
             // backgroundColor: Colors.white,
             appBar: AppBar(
-              title: Text('Choose Your Style'),
+              title: Text('Choose Frame'),
               // backgroundColor: Colors.black,
               bottom: TabBar(
                 tabAlignment: TabAlignment.start,
                 isScrollable: true,
                 dividerHeight: 0,
                 labelColor: Colors.white,
-                labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),
+                labelStyle: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w900),
                 labelPadding: EdgeInsets.only(right: 30, bottom: 0, left: 10),
                 indicatorColor: Color(0xFF21D3ED),
                 indicator: UnderlineTabIndicator(
@@ -161,6 +162,7 @@ class TemplateSelectionScreen extends StatelessWidget {
                 ),
                 tabs: categories.keys.map((e) => Tab(text: e)).toList(),
               ),
+              backgroundColor: Color(0xFF0F172A),
             ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +173,7 @@ class TemplateSelectionScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Featured Styles",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 CarouselSlider(
@@ -179,11 +181,16 @@ class TemplateSelectionScreen extends StatelessWidget {
                     height: 160,
                     autoPlay: true,
                     enlargeCenterPage: true,
+                    autoPlayInterval: Duration(seconds: 2)
                   ),
                   items: featuredTemplates.map((imgPath) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/customize', arguments: imgPath);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                            CustomizationScreen(
+                              category: 'Romantic', amount: '1000',
+                              productType: 'Airtel Airtime',
+                              pin: '1234567889990', templatePath: imgPath,)));
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
@@ -211,11 +218,11 @@ class TemplateSelectionScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context,
-                                    CustomizationScreen.id,
-                                    arguments: entry.value[index]
-                                );
+                                Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                    CustomizationScreen(
+                                        category: 'Romantic', amount: '1000',
+                                      productType: 'Airtel Airtime',
+                                      pin: '1234567889990', templatePath: entry.value[index],)));
                               },
                               child: Container(
                                 decoration: BoxDecoration(

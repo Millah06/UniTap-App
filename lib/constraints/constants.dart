@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 const kInputTextStyle = TextStyle(
   fontSize: 17,
@@ -49,17 +51,30 @@ const kErrorBackground = Color(0xFF1E293B);
 
 const kErrorIconColor = Colors.redAccent;
 
-const kAccountHeaderStyle = TextStyle(
-    fontSize: 25,
+TextStyle kAccountHeaderStyle = GoogleFonts.poppins(
+    fontSize: 20,
     fontWeight: FontWeight.w900,
     color: Colors.white
 );
 
-const kSetting = TextStyle(
+TextStyle kSetting = GoogleFonts.inter(
     fontWeight: FontWeight.w700,
     fontSize: 16,
     color: Colors.white54
 );
+
+TextStyle kConfirmationKey = GoogleFonts.inter(
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+    color: Colors.white54
+);
+
+TextStyle kConfirmationValue = GoogleFonts.inter(
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+    color: Colors.white
+);
+
 const kAiHeading = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 18,
@@ -86,11 +101,14 @@ const kMessageContainerDecoration = BoxDecoration(
   ),
 );
 
-const kExpenseStyle = TextStyle(
+TextStyle kExpenseStyle = GoogleFonts.inter(
   color: Colors.white,
   fontSize: 20,
   fontWeight: FontWeight.w700,
 );
+
+final kFormatter = NumberFormat('#,##0.00');
+final kFormatterNo = NumberFormat('#,##0');
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,

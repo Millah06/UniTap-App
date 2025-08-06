@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../components/account_information.dart';
 import '../../components/reusable_card.dart';
 import '../../constraints/constants.dart';
 import '../../services/brain.dart';
@@ -103,10 +105,12 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                               child: Container(
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Color(0xFF177E85),
                                   shape: BoxShape.circle,
                                 ),
-                                child: Icon(Icons.add, size: 22, color: Color(0xFF00B875),),
+                                child: Icon(FontAwesomeIcons.plusCircle,
+                                  size: 22, color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -150,7 +154,7 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                   // title: Text('Name: ${pov2.nam}', style: kSetting,),
                                   trailing: IconButton(
                                       style: IconButton.styleFrom(
-                                          backgroundColor: Colors.white
+                                          backgroundColor: Color(0xFF177E85)
                                       ),
                                       onPressed: () {
                                         // showModalBottomSheet(
@@ -158,7 +162,7 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                         //   isScrollControlled: true,
                                         // );
                                       },
-                                      icon: Icon(Icons.edit)),
+                                      icon: Icon(Icons.edit, color: Colors.white,)),
                                 ),
                               ),
                               GestureDetector(
@@ -174,7 +178,7 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                   // title: Text('Name: ${pov2.nam}', style: kSetting,),
                                   trailing: IconButton(
                                       style: IconButton.styleFrom(
-                                          backgroundColor: Colors.white
+                                          backgroundColor: Color(0xFF177E85)
                                       ),
                                       onPressed: () {
                                         // showModalBottomSheet(
@@ -182,28 +186,38 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                         //   isScrollControlled: true,
                                         // );
                                       },
-                                      icon: Icon(Icons.edit)),
+                                      icon: Icon(Icons.edit, color: Colors.white,)),
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // showModalBottomSheet(
-                                  //   context: context, builder: (context) => EditBottomSheet(theThing: 'Income',),
-                                  //   isScrollControlled: true,
-                                  // );
+                                  showModalBottomSheet(
+                                    context: context, builder: (context) =>
+                                      FractionallySizedBox(
+                                    heightFactor: 0.4,
+                                    child: AccountInformation(),
+                                  ),
+                                    isScrollControlled: true,
+                                    showDragHandle: true,
+                                    // backgroundColor: Color(0xFF333333),
+                                  );
                                 },
                                 child: ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text('Wallet Balance: \$30,009', style: kSetting,),
                                   trailing: IconButton(
-                                    style: IconButton.styleFrom(backgroundColor: Colors.white),
+                                    style: IconButton.styleFrom(backgroundColor:
+                                    Color(0xFF177E85)),
                                     onPressed: () {
                                       // showModalBottomSheet(
                                       //   context: context, builder: (context) => EditBottomSheet(theThing: 'Income',),
                                       //   isScrollControlled: true,
                                       // );
                                     },
-                                    icon: Icon(Icons.add),
+                                    icon: Icon(
+                                      FontAwesomeIcons.plusCircle,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -212,14 +226,81 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                 title: Text('Logout/ Switch Account', style: kSetting,),
                                 trailing: IconButton(
                                   color: Colors.red,
-                                  style: IconButton.styleFrom(backgroundColor: Colors.white),
+                                  style: IconButton.styleFrom(
+                                      backgroundColor:Color(0xFF177E85)),
                                   onPressed: () async {
-                                    final prefs = await SharedPreferences.getInstance();
-                                    await prefs.setBool('isSetupDone', true);
-                                    await FirebaseAuth.instance.signOut();
-                                    Navigator.pushAndRemoveUntil(
-                                      context, MaterialPageRoute(builder: (_) => WelcomeScreen()),
-                                          (route) => false,);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text('Logout Confirmation', style:
+                                        GoogleFonts.poppins(fontSize: 17,
+                                            fontWeight: FontWeight.w900, color: Colors.white),),
+                                        backgroundColor: kCardColor,
+                                        shape:
+                                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                        content: Padding(
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text('Are you sure, you want logout?',
+                                                  style:
+                                                  GoogleFonts.inter(fontSize: 15,
+                                                      fontWeight: FontWeight.bold)),
+                                              SizedBox(height: 10),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+
+                                                      backgroundColor: kButtonColor,
+                                                      elevation: 4,
+                                                      padding: EdgeInsets.symmetric(vertical:
+                                                      10, horizontal: 30),
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12)
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('No', style: TextStyle(color: Colors.white),)
+                                              ),
+                                              ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.transparent,
+                                                      elevation: 4,
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical: 10, horizontal: 30),
+                                                      side: BorderSide(
+                                                          color: kButtonColor
+                                                      ),
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12)
+                                                    ),
+                                                  ),
+                                                  onPressed: ()  async {
+                                                    Navigator.pop(context);
+                                                    final prefs = await SharedPreferences.getInstance();
+                                                    await FirebaseAuth.instance.signOut();
+                                                    await prefs.setBool('isSetupDone', false);
+                                                    Navigator.pushAndRemoveUntil(
+                                                      context, MaterialPageRoute(builder: (_) => WelcomeScreen()),
+                                                          (route) => false,);
+                                                  },
+                                                  child: Text('Yes', style: TextStyle(color: Colors.white),)
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    );
+
                                   },
                                   icon: Icon(Icons.logout),),
                               )
@@ -268,9 +349,10 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                   contentPadding: EdgeInsets.zero,
                                   title: Text('Contact us', style: kSetting,),
                                   trailing:  IconButton(
-                                    style: IconButton.styleFrom(backgroundColor: Colors.white),
+                                    style: IconButton.styleFrom(
+                                        backgroundColor: Color(0xFF177E85)),
                                     onPressed: () {launchEmail('SmartSpendSupportCenter');},
-                                    icon: Icon(Icons.mail),
+                                    icon: Icon(Icons.mail, color: Colors.white,),
                                   ),
                                 ),
                               ),
@@ -282,11 +364,12 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                   contentPadding: EdgeInsets.zero,
                                   title: Text('Feed Back', style: kSetting,),
                                   trailing: IconButton(
-                                      style: IconButton.styleFrom(backgroundColor: Colors.white),
+                                      style: IconButton.styleFrom(
+                                          backgroundColor: Color(0xFF177E85)),
                                       onPressed:  () {
                                         launchEmail('SmartSpendFeedBack');
                                       },
-                                      icon: Icon(Icons.feedback)),
+                                      icon: Icon(Icons.feedback, color: Colors.white,)),
                                 ),
                               ),
                             ],
@@ -319,12 +402,13 @@ class _ToolScreenState extends State<ProfileSettingsScreen > {
                                     contentPadding: EdgeInsets.zero,
                                     title: Text('Privacy Policy', style: kSetting,),
                                     trailing: IconButton(
-                                        style: IconButton.styleFrom(backgroundColor: Colors.white),
+                                        style: IconButton.styleFrom(
+                                            backgroundColor: Color(0xFF177E85)),
                                         onPressed: () {
                                           Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                               PrivacyPolicyPage()));
                                         },
-                                        icon: Icon(Icons.chevron_right_sharp)),
+                                        icon: Icon(Icons.chevron_right_sharp, color: Colors.white,)),
                                   ),
                                 ),
                               ],

@@ -6,22 +6,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
+import '../services/brain.dart';
 
 class Security2Screen extends StatefulWidget {
 
   static String id = 'security2';
   const Security2Screen({super.key});
 
+
   @override
   State<Security2Screen> createState() => _Security2ScreenState();
 }
 
 class _Security2ScreenState extends State<Security2Screen> {
+
   Color iconColor = Colors.white54;
   bool enable = true;
   bool obscureText1 = true;
@@ -42,14 +46,16 @@ class _Security2ScreenState extends State<Security2Screen> {
     return file;
   }
 
-  Future<void> _pick() async {
+  void _pick() async {
     File file = await getImageFileFromAssets('images/profile.png');
     _imageFile = file;
+    await Brain().getData();
   }
   @override
   void initState() {
     // TODO: implement initState
     _pick();
+
     super.initState();
   }
 
@@ -95,7 +101,7 @@ class _Security2ScreenState extends State<Security2Screen> {
                           backgroundColor: Colors.white
                       ),
                     ),
-                    title: Text('Go Back', style: TextStyle(
+                    title: Text('Go Back', style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.w700,
@@ -108,7 +114,7 @@ class _Security2ScreenState extends State<Security2Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Credential Confirmation',
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                             fontSize: 16, fontWeight: FontWeight.w900, color: kButtonColor),
                       ),
                       SizedBox(height: 10,),
@@ -116,14 +122,14 @@ class _Security2ScreenState extends State<Security2Screen> {
                         children: [
                           Icon(Icons.privacy_tip_sharp, color: Colors.white,),
                           SizedBox(width: 5,),
-                          Text('REASON', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900,),)
+                          Text('REASON', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w900,),)
                         ],
                       ),
                       SizedBox(height: 5,),
                       Text('For security reasons, you are required '
                           'to confirm these, don\'t worry if you forgot them, '
                           'just set new ones',
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                             fontSize: 12, fontWeight: FontWeight.w900, color: Colors.white70),
                       ),
                     ],
@@ -236,7 +242,7 @@ class _Security2ScreenState extends State<Security2Screen> {
                                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                             ),
                             child: Text('FINISH',
-                                style: TextStyle(color: Colors.white,
+                                style: GoogleFonts.inter(color: Colors.white,
                                     fontWeight: FontWeight.w700, fontSize: 18)
                             ),
                           ),

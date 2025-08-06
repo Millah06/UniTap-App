@@ -23,6 +23,7 @@ class Brain extends ChangeNotifier {
   }
   String passCode = '';
   String userName = '';
+  String accountBalance = '';
   Map accountData = {};
   String pIN = '';
   String imagePath = '';
@@ -79,12 +80,12 @@ class Brain extends ChangeNotifier {
     pIN = prefs.getString('transactionPIN')!;
     imagePath = prefs.getString('imagePath')!;
     try {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-      final doco = await FirebaseFirestore
-          .instance.collection('users').doc(userId).snapshots();
-      print(userId);
-      userName = doc['name'];
-      accountData = doc['va'];
+      final doc = await FirebaseFirestore.instance.collection('users')
+          .doc(userId).get();
+
+      userName = await doc['name'];
+      accountData = await doc['va'];
+      await doc['balance'];
       notifyListeners();
     }
     catch (e) {

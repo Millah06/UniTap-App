@@ -21,6 +21,7 @@ import '../../components/account_information.dart';
 import '../../components/recent_frame.dart';
 import '../../components/reusable_card.dart';
 import '../../components/service_fraame.dart';
+import '../../components/view_receipt.dart';
 import '../../services/brain.dart';
 import '../data_screen.dart';
 
@@ -56,7 +57,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.black, Color(0xFF177E85)],
+                        colors: [Colors.black38, Color(0xFF177E85)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -75,7 +76,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       children: [
                         Container(
                           alignment: Alignment.topLeft,
-                            margin: EdgeInsetsGeometry.only(left: 10),
+                            margin: EdgeInsetsGeometry.only(left: 12),
 
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -128,6 +129,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     child: Column(
                                       children: [
                                         Container(
+                                          padding: EdgeInsets.all(1.5),
                                           decoration: BoxDecoration(
                                               color: Colors.pink,
                                               borderRadius: BorderRadius.circular(5)
@@ -144,7 +146,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               ),
                             )
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(height: 10,),
                         AccountInformation()
                       ],
                     ),
@@ -260,23 +262,29 @@ class _WalletScreenState extends State<WalletScreen> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-              child: Text('Recent Transactions',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+              child: Text('Recent Transactions',  style:
+              GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w900),),
             ),
             Expanded(
               child: pov.transactions.isEmpty ?
-              Center(child: Text('No Transactions yet'),) :
+              Center(child: Text('No Transactions yet', style: GoogleFonts.inter(),),) :
               ListView.builder(
                 padding: EdgeInsets.only(left: 15, right: 15),
                 itemBuilder: (BuildContext context, int index) {
                   final transaction = pov.transactions[index];
                   return RecentFrame(
-                      beneficiary: transaction['type'],
-                      date:  transaction['date'].toDate(),
-                      amount: transaction['amount'],
-                      status: transaction['status']
+                    beneficiary: transaction['Product Name'],
+                    date:  DateTime.now(),
+                    amount: transaction['Amount'],
+                    status: transaction['Amount'],
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ViewReceipt(receiptData: transaction,)));
+                    },
                   );
                 },
+                itemCount: pov.transactions.length,
               ),
             )
           ],

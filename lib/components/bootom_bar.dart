@@ -5,6 +5,7 @@ import 'package:everywhere/screens/bottom_navigation/profile_settings_screen.dar
 import 'package:everywhere/screens/bottom_navigation/promotion.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/bottom_navigation/wallet_screen.dart';
 import '../screens/bottom_navigation/home_screen.dart';
@@ -84,7 +85,7 @@ class _BottomBarState extends State<BottomBar> {
                     Colors.white38,),
                   Visibility(
                     visible: selectedIndex == 0,
-                      child: Text('Home', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900),)
+                      child: Text('Home', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
                   )
                 ],
               ),
@@ -102,7 +103,7 @@ class _BottomBarState extends State<BottomBar> {
                     Colors.white38,),
                   Visibility(
                       visible: selectedIndex == 1,
-                      child: Text('Wallet', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900),)
+                      child: Text('Wallet', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
                   )
                 ],
               ),
@@ -120,7 +121,7 @@ class _BottomBarState extends State<BottomBar> {
                       Colors.white38),
                   Visibility(
                       visible: selectedIndex == 2,
-                      child: Text('Chances', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900),)
+                      child: Text('Chances', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
                   )
                 ],
               ),
@@ -138,7 +139,7 @@ class _BottomBarState extends State<BottomBar> {
                       Colors.white38),
                   Visibility(
                       visible: selectedIndex == 3,
-                      child: Text('Profile', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900),)
+                      child: Text('Profile', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
                   )
                 ],
               ),

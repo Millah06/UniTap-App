@@ -5,7 +5,8 @@ final Map<String, List<String>> messageSuggestions = {
   ],
   'Romantic': [
     "You’re my everything ❤.",
-    "A little surprise for my love 💕."
+    "A little surprise for my love 💕. "
+        "I love you so mush than I can express, you are a world to me"
   ],
   'Sallah': [
     "Eid Mubarak! 🌙 May your life be blessed.",

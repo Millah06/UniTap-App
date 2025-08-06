@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
@@ -79,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         backgroundColor: Colors.white
                     ),
                   ),
-                  title: Text('Go Back', style: TextStyle(
+                  title: Text('Go Back', style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
@@ -92,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Initial Setup',
-                      style: TextStyle(
+                      style: GoogleFonts.inter(
                           fontSize: 16, fontWeight: FontWeight.w900, color: kButtonColor),
                     ),
                     SizedBox(height: 10,),
@@ -100,14 +101,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         Icon(Icons.privacy_tip_sharp, color: Colors.white,),
                         SizedBox(width: 5,),
-                        Text('TIPS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900,),)
+                        Text('TIPS', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w900,),)
                       ],
                     ),
                     SizedBox(height: 5,),
                     Text('Make sure to used strong password with working '
                         'email. A password with special characters like; "@", '
                         '"!", "&", "#", "*" etc. It will enhance security to your account. ',
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 12,
+                      style: GoogleFonts.inter(fontWeight: FontWeight.w900, fontSize: 12,
                           color: Colors.white70),)
                   ],
                 ),

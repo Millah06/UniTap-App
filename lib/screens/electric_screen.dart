@@ -2,10 +2,12 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:everywhere/components/electric_plan_frame.dart';
 import 'package:everywhere/models/electric_plan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../components/confirmation_page.dart';
 import '../components/order_frame.dart';
+import '../components/textInput_formater.dart';
 import '../constraints/constants.dart';
 import '../services/purchase_service.dart';
 import '../services/transaction_service.dart';
@@ -387,6 +389,10 @@ class _ElectricScreenState extends State<ElectricScreen>  with SingleTickerProvi
                                         )
                                     ),
                                   ),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    TextFieldFormater()
+                                  ],
                                 ),
                               ),
                             ),
@@ -454,11 +460,11 @@ class _ElectricScreenState extends State<ElectricScreen>  with SingleTickerProvi
                                         builder: (context) =>
                                             ConfirmationPage(
                                               productName: _selectedProvider,
-                                              amount: _amountController.text,
+                                              amount: _amountController.text.replaceAll(',', ''),
                                               recipientMobile: _meterNumberController.text,
                                               onTap: () {
                                                 TransactionService.handlePurchase(
-                                                    amount: _amountController.text,
+                                                    amount: _amountController.text.replaceAll(',', ''),
                                                     context: context,
                                                     buildData: (Map<String, dynamic> response) {
                                                       return {
@@ -494,7 +500,7 @@ class _ElectricScreenState extends State<ElectricScreen>  with SingleTickerProvi
                                     );
                                   }
                                 },
-                                child: Text('Proceed', style: TextStyle(color: Colors.white),)
+                                child: Text('Proceed', style: TextStyle(color: Colors.black),)
                             ),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(

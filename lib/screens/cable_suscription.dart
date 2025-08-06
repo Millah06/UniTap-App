@@ -156,7 +156,7 @@ class _CableSubscriptionState extends State<CableSubscription> with TickerProvid
                                           Text('₦',  style: TextStyle(color: Colors.white54,
                                               fontWeight: FontWeight.w700, fontSize: 14)),
                                           SizedBox(width: 3,),
-                                          Text(plan.price.split('.').first,
+                                          Text(kFormatterNo.format(double.tryParse(plan.price.split('.').first)),
                                             style: TextStyle(color: Colors.white,
                                                 fontWeight: FontWeight.w700, fontSize: 20),),
                                         ],
@@ -189,7 +189,7 @@ class _CableSubscriptionState extends State<CableSubscription> with TickerProvid
                     Positioned(
                         top: 4,
                         right: 2,
-                        child: Icon(Icons.check_circle, color: Color(0xFF21D3ED),)
+                        child: Icon(Icons.check_circle, color: Color(0xFF21D3ED), size: 18,)
                     )
                 ],
               ),
@@ -412,7 +412,7 @@ class _CableSubscriptionState extends State<CableSubscription> with TickerProvid
                               if (!snapshot.hasData) {
                                 return Center(
                                   child: CircularProgressIndicator(
-                                    value: 10,
+                                    value: 5,
                                     backgroundColor: kCardColor,
                                     color: kButtonColor,
                                   ),
@@ -503,7 +503,10 @@ class _CableSubscriptionState extends State<CableSubscription> with TickerProvid
                                     right: 5,
                                       top: 1,
                                       child: FaIcon(Icons.check_circle,
-                                        color: addIsTouch ? Color(0xFF21D3ED) : Colors.white70,)
+                                        color: addIsTouch ? Color(0xFF21D3ED)
+                                            : Colors.white70,
+                                        size: 20,
+                                      )
                                   ),
                                 ]
                               );
@@ -636,7 +639,7 @@ class _CableSubscriptionState extends State<CableSubscription> with TickerProvid
                                 );
                               }
                             },
-                            child: Text('Buy Now', style: TextStyle(color: Colors.white),)
+                            child: Text('Buy Now', style: TextStyle(color:  Colors.black,),)
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(

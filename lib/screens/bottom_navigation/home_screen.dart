@@ -19,6 +19,7 @@ import 'package:everywhere/screens/transaction_history_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:local_auth/local_auth.dart';
@@ -43,7 +44,9 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+
 
   @override
   bool get wantKeepAlive => true;
@@ -66,6 +69,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     // TODO: implement initState
     super.initState();
   }
+
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.paused) {
+  //     _controller.stop();
+  //   } else if (state == AppLifecycleState.resumed) {
+  //     _controller.repeat(reverse: true);
+  //   }
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   // TODO: implement dispose
+  //   super.dispose();
+  // }
 
   bool hasTouched = false;
   @override
@@ -277,7 +295,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('EveryWhere', style: kTopAppbars.copyWith( fontFamily:  'DejaVu Sans'),),
+                            Text('EveryWhere', style: kTopAppbars.copyWith(
+                                fontFamily:  'DejaVu Sans'), ),
                             // Text('Welcome ${pov.user}', style: kWelcomeStyle,),
                             Text('Welcome back ${pov.user}!', style: kWelcomeStyle,)
                           ],
@@ -297,6 +316,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                               child: Column(
                                 children: [
                                   Container(
+                                    padding: EdgeInsets.all(1.5),
                                     decoration: BoxDecoration(
                                         color: Colors.pink,
                                         borderRadius: BorderRadius.circular(5)
@@ -349,6 +369,12 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     decoration: BoxDecoration(
                       // color: Color(0xFF177E85),
                         color: Color(0xFF0F172A),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF0F172A), Color(0xFF0D9488), Color(0xFF0F172A),],
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [BoxShadow(color: Color(0xFF177E85).withOpacity(0.4),
                             blurRadius: 8, spreadRadius: 1, offset: Offset(0, 2))]
@@ -433,12 +459,12 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                     blurRadius: 8, spreadRadius: 1, offset: Offset(0, 2))]
                             ),
                             child: GestureDetector(
-                              onTap: ()async {
+                              onTap: ()  {
                                 showModalBottomSheet(
                                   context: context, builder: (context) => FractionallySizedBox(
                                   heightFactor: 0.4,
-                                    child: AccountInformation(),
-                                  ),
+                                  child: AccountInformation(),
+                                ),
                                   isScrollControlled: true,
                                   showDragHandle: true,
                                   // backgroundColor: Color(0xFF333333),
@@ -461,7 +487,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                   PromoCarousel(),
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
-                    child: Text('Insights', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),),
+                    child: Text('Insights', style: GoogleFonts.poppins(
+                        fontSize: 17, fontWeight: FontWeight.w900),),
                   ),
                   Container(
                       width: double.infinity,
@@ -546,7 +573,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       )),
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
-                    child: Text('Services', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),),
+                    child: Text('Services',
+                      style: GoogleFonts.poppins(fontSize: 17,
+                          fontWeight: FontWeight.w900),
+                    ),
                   ),
                   Container(
                       height: 305,

@@ -6,6 +6,7 @@ import 'package:everywhere/components/flush_bar_message.dart';
 import 'package:everywhere/constraints/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +95,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                   ),
                   SizedBox(height: 20,),
                   Text(pov.user, style:
-                  TextStyle(fontWeight: FontWeight.w900,
+                  GoogleFonts.inter(fontWeight: FontWeight.w900,
                     fontSize: 18, letterSpacing: 0.5, height: 0),),
                   SizedBox(height: 30,),
                   Center(
@@ -141,10 +142,10 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
               padding: const EdgeInsets.only(right: 15),
               child: GestureDetector(
                 onTap: () {},
-                child: const Text(
+                child: Text(
                   "Forgot PassCode?",
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
                     color: kButtonColor,
                     fontWeight: FontWeight.w900,
                     decoration: TextDecoration.underline,
@@ -189,7 +190,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 100)
                 ),
                 child: Text('Login Now', style:
-                TextStyle(color: textColor, fontWeight: FontWeight.w700, fontSize: 18)),
+                GoogleFonts.inter(color: textColor, fontWeight: FontWeight.w700, fontSize: 18)),
               ),
             ),
             CustomPinKeyboard(

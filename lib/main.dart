@@ -10,6 +10,8 @@ import 'package:everywhere/services/brain.dart';
 import 'package:everywhere/services/purchase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -162,7 +164,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
           appBarTheme: AppBarTheme(
             backgroundColor: Color(0xFF177E85),
-            titleTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
+            titleTextStyle: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
             iconTheme: IconThemeData(
                 color: Colors.white
             ),
@@ -173,6 +175,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             backgroundColor: Color(0xFF0F172A),
             dragHandleColor: Colors.white,
           ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              side: BorderSide(
+                  color: kButtonColor
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              textStyle: GoogleFonts.inter(fontWeight: FontWeight.bold)
+            ),
+          )
         ),
         home:  hasDone ? const FirstScreen() : const WelcomeScreen(),
         routes: {
@@ -182,8 +195,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           FirstScreen.id: (context) => FirstScreen(),
           WelcomeScreen.id: (context) => WelcomeScreen(),
           '/cable': (context) => CableSubscription(),
-          CustomizationScreen.id: (context) => CustomizationScreen(
-            category: 'Romantic', amount: '2000', productType: 'Airtime', pin: '1234678086532234567',)
         },
       ),
     );

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../components/bootom_bar.dart';
@@ -178,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         backgroundColor: Colors.white
                     ),
                   ),
-                  title: Text('Go Back', style: TextStyle(
+                  title: Text('Go Back', style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
@@ -188,8 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 15, top: 20),
                 child: Text('Login to your account',
-                  style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w900, color: kButtonColor),
+                  style: GoogleFonts.inter(
+                      fontSize: 17, fontWeight: FontWeight.w900, color: kButtonColor),
                 ),
               ),
               Expanded(
@@ -349,7 +350,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pop(context);
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Security2Screen()),
+                                  MaterialPageRoute(builder: (context) =>
+                                      Security2Screen()),
                                 );
                                 Flushbar(
                                   title: 'Success',
@@ -388,7 +390,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                           ),
                           child: Text('Proceed',
-                              style: TextStyle(color: Colors.white,
+                              style: GoogleFonts.inter(color: Colors.white,
                                   fontWeight: FontWeight.w700, fontSize: 18)
                           ),
                         ),

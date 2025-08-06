@@ -140,7 +140,7 @@ class _DataScreenState extends State<DataScreen> with TickerProviderStateMixin {
                                 Text('₦',  style: TextStyle(color: Colors.white54,
                                     fontWeight: FontWeight.w700, fontSize: 13)),
                                 SizedBox(width: 3,),
-                                Text(plan.price.split('.').first,
+                                Text(kFormatterNo.format(double.parse(plan.price.split('.').first)),
                                   style: TextStyle(color: Colors.white,
                                       fontWeight: FontWeight.w700, fontSize: 18),),
                               ],
@@ -173,7 +173,7 @@ class _DataScreenState extends State<DataScreen> with TickerProviderStateMixin {
                     Positioned(
                         top: 4,
                         right: 2,
-                      child: Icon(Icons.check_circle)
+                      child: Icon(Icons.check_circle, size: 18 ,)
                   )
                 ],
               ),
@@ -477,7 +477,7 @@ class _DataScreenState extends State<DataScreen> with TickerProviderStateMixin {
                               );
                             }
                           },
-                          child: Text('Buy Now', style: TextStyle(color: Colors.white),)
+                          child: Text('Buy Now', style: TextStyle(color: Colors.black),)
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(

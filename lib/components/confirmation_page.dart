@@ -47,23 +47,34 @@ class ConfirmationPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Product Name', style: kSetting,),
-                    productName == 'electricity unit' ?
-                    Text('Meter Number', style: kSetting,) :
-                    productName == 'Recharge Pins' ? Text('Business Name', style: kSetting,) :
-                    Text('Recipient Mobile', style: kSetting,),
+                    Text('Product Name', style: kConfirmationKey,),
+                    SizedBox(height: 10,),
+                    productName.contains('Electricity')  ?
+                    Text('Meter Number', style: kConfirmationKey,)
+                        :
+                    productName == 'Recharge Pins' ? Text('Business Name',
+                      style: kConfirmationKey,) :
+
+                    Text('Recipient Mobile', style: kConfirmationKey,),
+                    SizedBox(height: 10,),
                     productName == 'Recharge Pins' ?
-                    Text('Value of Each', style: kSetting,) : Text('Amount', style: kSetting,),
-                    Text('Bonus to Earn', style: kSetting,)
+                    Text('Value of Each', style: kConfirmationKey,) : Text('Amount', style: kSetting,),
+                    SizedBox(height: 10,),
+                    Text('Bonus to Earn', style: kConfirmationKey,)
+
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(productName, style: kSetting.copyWith(color: Colors.white),),
-                    Text(recipientMobile, style: kSetting.copyWith(color: Colors.white),),
-                    Text(amount, style: kSetting.copyWith(color: Colors.white),),
-                    Text((double.tryParse(amount)! * 0.035).toStringAsFixed(2), style: kSetting.copyWith(color: Colors.white),)
+                    Text(productName, style: kConfirmationValue,),
+                    SizedBox(height: 10,),
+                    Text(recipientMobile, style: kConfirmationValue,),
+                    SizedBox(height: 10,),
+                    Text(kFormatter.format(double.parse(amount)), style: kConfirmationValue,),
+                    SizedBox(height: 10,),
+                    Text(kFormatter.format((double.tryParse(amount)! * 0.035)),
+                      style: kConfirmationValue,)
                   ],
                 )
               ],

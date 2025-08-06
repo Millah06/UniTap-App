@@ -6,6 +6,7 @@ import 'package:everywhere/constraints/constants.dart';
 import 'package:everywhere/screens/passcode_login.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -99,13 +100,13 @@ class _FirstScreenState extends State<FirstScreen> {
                   ),
                 ),
                 SizedBox(height: 20,),
-                Text(pov.user, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15,),),
+                Text(pov.user, style: GoogleFonts.inter(fontWeight: FontWeight.w900, fontSize: 15,),),
                 SizedBox(height: 30,),
                 Icon(Icons.fingerprint, size: 70,),
                 SizedBox(height: 30,),
                 TextButton(onPressed:  () {_auth(pov.canAuthenticate());},
                     child: Text('Click to log in with Fingerprint',
-                      style: TextStyle(color: kButtonColor),)),
+                      style: GoogleFonts.inter(color: kButtonColor),)),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {_auth(pov.canAuthenticate());},
@@ -113,7 +114,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         backgroundColor: Color(0xFF21D3ED),
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 70)
                     ),
-                    child: Text('Verify Fingerprint', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
+                    child: Text('Verify Fingerprint', style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
                   ),
                 ),
               ],
@@ -128,11 +129,11 @@ class _FirstScreenState extends State<FirstScreen> {
                             builder: (context) => PasscodeScreen()));
                       },
                       child: Text('Login with Password',
-                        style: TextStyle(color: kButtonColor, fontSize: 15, fontWeight: FontWeight.w900),),
+                        style: GoogleFonts.inter(color: kButtonColor, fontSize: 15, fontWeight: FontWeight.w900),),
                     ),
                     SizedBox(height: 20,),
                     Divider(indent: 50, endIndent: 50,),
-                    Text('Powered by SkyNest Innovations',),
+                    Text('Powered by SkyNest Innovations', style: GoogleFonts.inter(),),
                   ],
                 )
               ],

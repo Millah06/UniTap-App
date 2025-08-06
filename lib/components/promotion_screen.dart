@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -143,6 +144,22 @@ class _PromoCarouselState extends State<PromoCarousel> {
     _startAutoScroll();
   }
 
+  void _startAutoScroll() {
+    _autoScrollTimer = Timer.periodic(Duration(seconds: 4), (timer) {
+      if (_pageController.hasClients) {
+
+        final contextSize = _pageController.positions.isNotEmpty
+                  ? _pageController.positions.first.viewportDimension
+                  : 0.0;
+        int nextPage =
+            (_currentIndex + 1) %(_pageController.positions.first.maxScrollExtent
+                ~/ contextSize + 1);
+        _pageController.animateToPage(nextPage,
+            duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+      }
+    });
+  }
+
   // void _startAutoScroll() {
   //   _autoScrollTimer = Timer.periodic(Duration(seconds: 4), (timer) {
   //     if (_pageController.hasClients) {
@@ -161,25 +178,25 @@ class _PromoCarouselState extends State<PromoCarousel> {
   //   });
   // }
 
-  void _startAutoScroll() {
-    _autoScrollTimer = Timer.periodic(Duration(seconds: 4), (timer) {
-      if (!mounted || !_pageController.hasClients) return;
-
-      // ✅ Only auto-scroll if more than 1 page
-      final totalPages = _pageController.positions.first.maxScrollExtent /
-          _pageController.position.viewportDimension +
-          1;
-
-      if (totalPages > 1) {
-        int nextPage = (_currentIndex + 1) % totalPages.toInt();
-        _pageController.animateToPage(
-          nextPage,
-          duration: Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-      }
-      });
-  }
+  // void _startAutoScroll() {
+  //   _autoScrollTimer = Timer.periodic(Duration(seconds: 4), (timer) {
+  //     if (!mounted || !_pageController.hasClients) return;
+  //
+  //     // ✅ Only auto-scroll if more than 1 page
+  //     final totalPages = _pageController.positions.first.maxScrollExtent /
+  //         _pageController.position.viewportDimension +
+  //         1;
+  //
+  //     if (totalPages > 1) {
+  //       int nextPage = (_currentIndex + 1) % totalPages.toInt();
+  //       _pageController.animateToPage(
+  //         nextPage,
+  //         duration: Duration(milliseconds: 500),
+  //         curve: Curves.easeInOut,
+  //       );
+  //     }
+  //     });
+  // }
 
   @override
   void dispose() {
@@ -258,7 +275,7 @@ class _PromoCarouselState extends State<PromoCarousel> {
 
           final cards = snapshot.data!.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
           return SizedBox(
-            height: 180,
+            height: 150,
             child: PageView.builder(
               controller: _pageController,
               itemCount: cards.length,
@@ -291,36 +308,40 @@ class _PromoCarouselState extends State<PromoCarousel> {
                     )
                         : null,
                   ),
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(card['title'],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 8),
-                      Text(card['subtitle'],
-                          style:
-                          TextStyle(color: Colors.white70, fontSize: 12)),
-                      Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(card['title'],
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: buttonColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () => handleAction(card),
+                            child: Text(
+                              card['buttonText'] ?? 'Explore',
+                              style: TextStyle(
+                                  color: Colors.black, fontWeight: FontWeight.w900, fontSize: 12),
+                            ),
                           ),
-                        ),
-                        onPressed: () => handleAction(card),
-                        child: Text(
-                          card['buttonText'] ?? 'Explore',
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.w600),
-                        ),
+                        ],
                       ),
                       SizedBox(height: 4),
+                      Text(card['subtitle'],
+                          style:
+                          GoogleFonts.poppins(color: Color(0xFF1E293B), fontSize: 10, fontWeight: FontWeight.bold)),
+                      Spacer(),
                       Center(
                         child: SmoothPageIndicator(
                           controller: _pageController,

@@ -1,8 +1,10 @@
 
 import 'package:everywhere/screens/profile_picture.dart';
+import 'package:everywhere/services/brain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/bootom_bar.dart';
@@ -35,8 +37,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
     await prefs.setString('loginPassCode', _passcode1controller.text);
     await prefs.setString('transactionPIN', _pin1controller.text);
     await prefs.setBool('isSetupDone', true);
-    Navigator.pushAndRemoveUntil(
-      context, MaterialPageRoute(builder: (_) => BottomBar()), (route) => false,);
+    // Navigator.pushAndRemoveUntil(
+    //   context, MaterialPageRoute(builder: (_) => BottomBar()), (route) => false,);
   }
 
   @override
@@ -73,7 +75,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                           backgroundColor: Colors.white
                       ),
                     ),
-                    title: Text('Go Back', style: TextStyle(
+                    title: Text('Go Back', style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.w700,
@@ -86,7 +88,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Security Setup',
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                             fontSize: 16, fontWeight: FontWeight.w900, color: kButtonColor),
                       ),
                       SizedBox(height: 10,),
@@ -94,14 +96,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
                         children: [
                           Icon(Icons.privacy_tip_sharp, color: Colors.white,),
                           SizedBox(width: 5,),
-                          Text('TIPS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900,),)
+                          Text('TIPS', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w900,),)
                         ],
                       ),
                       SizedBox(height: 5,),
                       Text('To enhance security, PassCode will always be required'
                           ' to enter your app, and PIN will be used to confirm '
                           'payment. So try inputting something that can easily be remembered ',
-                        style: TextStyle(fontWeight: FontWeight.w900, fontSize: 12,
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w900, fontSize: 12,
                             color: Colors.white70),)
                     ],
                   ),
@@ -294,6 +296,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 await _saveData();
+                                await Brain().getData();
                                 Navigator.pushAndRemoveUntil(
                                   context, MaterialPageRoute(builder: (_) => BottomBar()), (route) => false,);
                               }

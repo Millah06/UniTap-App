@@ -1,10 +1,12 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:everywhere/models/internet_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../components/confirmation_page.dart';
@@ -16,8 +18,14 @@ import '../services/brain.dart';
 import '../services/purchase_service.dart';
 import '../services/transaction_service.dart';
 
+enum Selectors {
+  option1,
+  option2,
+}
+
 class InternetServicesScreen extends StatefulWidget {
   const InternetServicesScreen({super.key});
+
 
   @override
   State<InternetServicesScreen> createState() => _InternetServicesScreenState();
@@ -27,8 +35,20 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
 
   TabController ? _tabController;
 
+  Selectors? selectedField;
+  Color containerColor = Color(0xFFE3E3E3);
+  Color textColor = Colors.black;
+
+
+
+  Color activeTextColor = kCardColor;
+  Color inactiveTextColor = Colors.white;
+  Color inactiveContainerColor = kCardColor;
+  Color activeContainerColor = Color(0xFFE3E3E3);
+
   Map<String, List<InternetCategoryData>> _categories = {};
   bool isLoading = true;
+  bool readyToShowName = false;
   String _selectedNetwork = 'Smile Network';
 
   final Map<int, int?> _selectedIndices = {};
@@ -61,6 +81,8 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
 
   List networks = ['Smile Network', 'Spectra Net'];
   final _formKey = GlobalKey<FormState>();
+  Future<Map<String, String>?>? customerDetails;
+  String accountID = '';
 
   Future<Map<String, List<InternetCategoryData>>> fetchCategories() async {
     final ref = FirebaseDatabase.instanceFor( app: Firebase.app(),
@@ -179,8 +201,10 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     if (isLoading) {
       return Scaffold(
         appBar: AppBar(
@@ -325,18 +349,80 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
                   },
                 ),
                 SizedBox(height: 20,),
+                SizedBox(
+                  width: 400,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedField = Selectors.option1;
+                            containerColor = activeContainerColor;
+                            _phoneController.clear();
+                            // hasChoose = true;
+                            // onNext = false;
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          padding: EdgeInsets.all(10),
+                          width: 120,
+                          decoration: BoxDecoration(
+                            color:
+                            selectedField == Selectors.option1
+                                ? activeContainerColor
+                                : inactiveContainerColor,
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                          child: Center(child: Text('Account ID',
+                            style: TextStyle(color:
+                            selectedField == Selectors
+                                .option1 ? activeTextColor : inactiveTextColor,
+                                fontSize: 15),)),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedField = Selectors.option2;
+                            containerColor = activeContainerColor;
+                            _phoneController.clear();
+                            // hasChoose = true;
+                            // onNext = false;
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 15),
+                          padding: EdgeInsets.all(10),
+                          width: 120,
+                          decoration: BoxDecoration(
+                            color: selectedField == Selectors.option2
+                                ? activeContainerColor
+                                : inactiveContainerColor,
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                          child: Center(child: Text('Email',
+                            style: TextStyle(color: selectedField == Selectors
+                                .option2 ? activeTextColor : inactiveTextColor,
+                                fontSize: 15),)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 TextFormField(
                   cursorColor: Colors.white,
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                  keyboardType: TextInputType.phone,
+                  keyboardType: selectedField == Selectors.option1 ?
+                  TextInputType.phone : TextInputType.emailAddress,
                   controller: _phoneController,
                   maxLength: 10,
                   decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    prefix: Text('+234 | ',
-                      style: TextStyle(color: Colors.white, fontSize: 14,
-                          fontWeight: FontWeight.w900),),
-                    hintText: '8023344567',
+                    labelText: selectedField == Selectors.option1 ?
+                     'Account ID' : 'Registered Email',
+                    hintText: selectedField == Selectors.option1 ?
+                  '3245902891' : 'johnny@gmail.com',
                     labelStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
                   ),
                   validator: (value) {
@@ -348,8 +434,106 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
                     }
                     return null;
                   },
+                  onChanged: (value) async {
+                    if (selectedField == Selectors.option2) {
+                      if (value.endsWith('.com')) {
+
+                        customerDetails = PurchaseItems().verifySmile(value);
+
+                        final res = await PurchaseItems().verifySmile(value);
+                        accountID = res!['accountID']!;
+
+                        setState(() {
+                          readyToShowName = true;
+                        });
+                      }
+                      else  {
+                        setState(() {
+                          readyToShowName = false;
+                        });
+                      }
+                    }
+                    else {
+                      accountID = value;
+                    }
+                  },
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 15,),
+                Visibility(
+                    visible: readyToShowName,
+                    child: Column(
+                      children: [
+                        FutureBuilder<Map<String, dynamic>?>(
+                            future: customerDetails,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: 5,
+                                    backgroundColor: kCardColor,
+                                    color: kButtonColor,
+                                  ),
+                                );
+                              }
+                              return Stack(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          // color: Color(0xFF1E293B),
+                                          border: Border.all(
+                                              color: Colors.white70,
+                                              width: 0.5
+                                          )
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('Name', style: TextStyle(fontSize: 11),),
+                                                  Text('Account ID', style: TextStyle(fontSize: 11),),
+                                                  Text('Number of Accounts', style: TextStyle(fontSize: 11),)
+                                                ],
+                                              ),
+                                              SizedBox(width: 10,),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(snapshot.data?['name'],
+                                                    style:
+                                                    TextStyle(fontWeight: FontWeight.w900, fontSize: 12),),
+                                                  Text('${snapshot.data?['accountID']} to'
+                                                      ' ${snapshot.data?['provider']}',
+                                                    style: TextStyle(fontWeight:
+                                                    FontWeight.w900, fontSize: 12),),
+                                                  Text(snapshot.data?['numberOfAccounts'], style:
+                                                  TextStyle(fontWeight: FontWeight.w900, fontSize: 12),)
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                        right: 5,
+                                        top: 1,
+                                        child: FaIcon(Icons.check_circle,
+                                          color: Color(0xFF21D3ED),)
+                                    ),
+                                  ]
+                              );
+                            }
+                        )
+                      ],
+                    )
+                ),
+                SizedBox(height: 15,),
                 Padding(
                   padding: const EdgeInsets.only(left: 0),
                   child: Text('Data Plans', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),),
@@ -443,7 +627,7 @@ class _InternetServicesScreenState extends State<InternetServicesScreen> with Ti
                               );
                             }
                           },
-                          child: Text('Buy Now', style: TextStyle(color: Colors.white),)
+                          child: Text('Buy Now', style: TextStyle(color: Colors.black),)
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(

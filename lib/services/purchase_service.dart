@@ -377,14 +377,14 @@ class PurchaseItems {
 
   Future<void> purchaseSpectra() async {}
 
-  Future<Map<String, dynamic>?> verifySmile(String smileEmail) async {
+  Future<Map<String, String>?> verifySmile(String smileEmail) async {
     final idToken = await getIdToken();
     final dio = Dio();
     try{
       var response = await dio.post(
           '$baseURL/cable/verifyMerchant',
           data: {
-            "smartCard": "1212121212",
+            "smartCard": "tester@sandbox.com",
             "serviceID": 'smile-direct'
           },
           options: Options(

@@ -4,6 +4,7 @@ import 'package:everywhere/screens/security_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,7 +92,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                         backgroundColor: Colors.white
                     ),
                   ),
-                  title: Text('Go Back', style: TextStyle(
+                  title: Text('Go Back', style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
@@ -104,7 +105,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Profile Picture Upload',
-                      style: TextStyle(
+                      style: GoogleFonts.inter(
                           fontSize: 16, fontWeight: FontWeight.w900, color: kButtonColor),
                     ),
                     SizedBox(height: 10,),
@@ -112,13 +113,13 @@ class _ProfilePictureState extends State<ProfilePicture> {
                       children: [
                         Icon(Icons.note_add_sharp, color: Colors.white,),
                         SizedBox(width: 5,),
-                        Text('NOTE', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900,),)
+                        Text('NOTE', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w900,),)
                       ],
                     ),
                     SizedBox(height: 5,),
                     Text('It is not necessary to upload the profile picture. '
                         'You can easily skip if you wish. But uploading gives you a more personalized experience',
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 12,
+                      style: GoogleFonts.inter(fontWeight: FontWeight.w900, fontSize: 12,
                           color: Colors.white70),)
                   ],
                 ),

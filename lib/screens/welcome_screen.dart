@@ -2,6 +2,7 @@
 import 'package:everywhere/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constraints/constants.dart';
 import 'login_screen.dart';
@@ -24,8 +25,8 @@ class WelcomeScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Welcome to',
-                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),),
+                Text('Welcome to', style: kTopAppbars.copyWith(
+                    fontFamily:  'DejaVu Sans', fontSize: 30)),
                 Image(image: AssetImage('images/eraser.png'), height: 120,
                   fit: BoxFit.cover, width: 120,),
                 SizedBox(height: 30,),
@@ -33,10 +34,10 @@ class WelcomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15, right: 15),
                   child: Text('The safest, most reliable and '
                       'trusted VTU service platform, used by resellers, agents'
-                      ' and digital digital bosses.'
+                      ' and digital bosses.'
                       '\n\nPower your hustle with data, airtime, electricity, '
                       'exams, and more - all in one super powerful app.',
-                    style: TextStyle(fontWeight: FontWeight.w900), textAlign: TextAlign.center,),
+                    style: GoogleFonts.inter(fontWeight: FontWeight.w900), textAlign: TextAlign.center,),
                 )
               ],
             ),
@@ -56,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text('Let\'s get started like a PRO 🦾',
-                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),),
+                            style: GoogleFonts.inter(fontWeight: FontWeight.w900, fontSize: 17),),
                           ElevatedButton(
                             onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context)
@@ -66,7 +67,7 @@ class WelcomeScreen extends StatelessWidget {
                               backgroundColor: Color(0xFF21D3ED),
                               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 100)
                             ),
-                            child: Text('Login', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
+                            child: Text('Login', style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -82,7 +83,7 @@ class WelcomeScreen extends StatelessWidget {
                                 )
                             ),
                             child: Text('New user',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),),
+                              style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),),
                           )
                         ],
                       ),
