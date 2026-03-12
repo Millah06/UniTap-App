@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
 import '../services/brain.dart';
+import 'community_screen.dart';
 
 class Security2Screen extends StatefulWidget {
 
@@ -39,8 +40,8 @@ class _Security2ScreenState extends State<Security2Screen> {
   Future<File> getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load(path);
 
-    final tempDir = await getTemporaryDirectory();
-    final file = File('${tempDir.path}/default_profile.png');
+    final appDir = await getApplicationDocumentsDirectory();
+    final file = File('${appDir.path}/profile.png');
 
     await file.writeAsBytes(byteData.buffer.asUint8List());
     return file;
@@ -49,7 +50,7 @@ class _Security2ScreenState extends State<Security2Screen> {
   void _pick() async {
     File file = await getImageFileFromAssets('images/profile.png');
     _imageFile = file;
-    await Brain().getData();
+
   }
   @override
   void initState() {
@@ -231,10 +232,51 @@ class _Security2ScreenState extends State<Security2Screen> {
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
+                              FocusScope.of(context).unfocus();
+
                               if (_formKey.currentState!.validate()) {
-                                await _saveData();
-                                Navigator.pushAndRemoveUntil(
-                                  context, MaterialPageRoute(builder: (_) => BottomBar()), (route) => false,);
+
+                                showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: false,
+                                  enableDrag: false,
+                                  backgroundColor: Colors.black54,
+                                  builder: (_) => const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: CircularProgressIndicator(
+                                          value: 20,
+                                          backgroundColor: kCardColor,
+                                          color: kButtonColor,
+                                        ),
+                                      ),
+                                      Text('Setting up your account..')
+                                    ],
+                                  ),
+                                );
+                                try {
+
+                                  await _saveData();
+
+                                  await Brain().getData();
+
+                                  if (context.mounted) {
+                                    Navigator.pop(context); // Remove loading dialog
+                                  }
+
+                                  // 4. Navigate away
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) => const CommunityScreen(isLogInOut: true,)),
+                                        (route) => false,
+                                  );
+                                } catch (e) {
+                                  // On error, close the sheet too
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Something went wrong: $e")),
+                                  );
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -242,7 +284,7 @@ class _Security2ScreenState extends State<Security2Screen> {
                                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                             ),
                             child: Text('FINISH',
-                                style: GoogleFonts.inter(color: Colors.white,
+                                style: GoogleFonts.inter(color: Colors.black,
                                     fontWeight: FontWeight.w700, fontSize: 18)
                             ),
                           ),

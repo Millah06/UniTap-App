@@ -62,3 +62,7 @@ firebase.jsonbash
 firebase.json
 function
 firebase_data
+
+# Android release keys
+/android/app/my-release-key.jks
+/android/key.properties

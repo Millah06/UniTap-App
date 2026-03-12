@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everywhere/components/wallet_balance.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,18 +19,30 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../constraints/constants.dart';
+import '../services/brain.dart';
+import 'formatters.dart';
 
 class ViewReceipt extends StatelessWidget {
 
-  final Map<String, dynamic> receiptData;
+  final String transactionID;
 
-  const ViewReceipt({super.key, required this.receiptData});
+  const ViewReceipt({super.key, required this.transactionID});
 
 
 
   @override
   Widget build(BuildContext context) {
+
     final GlobalKey previewKey = GlobalKey();
+
+    final pov = Provider.of<Brain>(context);
+    Map<String, dynamic> receiptData =
+    pov.transactions.firstWhere((currentList) => currentList['Transaction ID'] == transactionID);
+
+    DateTime date = receiptData['Date'] is Timestamp
+        ? (receiptData['Date'] as Timestamp).toDate()
+        : (receiptData['Date'] as DateTime);
+
 
     Future<void> generateAndShareImage() async {
       try {
@@ -52,8 +65,8 @@ class ViewReceipt extends StatelessWidget {
         await SharePlus.instance.share(
           ShareParams(
               files:  [XFile(filePath)],
-              title: 'Smart Spend Pdf Expense Report',
-              text: 'Here’s your surprise gift! ❤️'
+              title: 'NexPay Transaction Receipt',
+              text: 'Get yours → ${AppLinkHandler.appLink}'
           ),
         );
 
@@ -75,7 +88,7 @@ class ViewReceipt extends StatelessWidget {
           RepaintBoundary(
             key: previewKey,
             child: Container(
-              margin: EdgeInsets.only(left: 20, right: 20, top: 40),
+              margin: EdgeInsets.only(left: 12, right: 12, top: 40),
               padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 15),
               width: double.infinity,
               decoration: BoxDecoration(
@@ -103,7 +116,7 @@ class ViewReceipt extends StatelessWidget {
                               child: Transform.rotate(
                                   angle: 0.5,
                                   child: Image(
-                                    image: AssetImage('images/eraser.png'),
+                                    image: AssetImage('images/receipt.png'),
                                     width: 50,
                                     height: 50,
                                   )
@@ -122,7 +135,7 @@ class ViewReceipt extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset('images/eraser.png', height: 65, width: 65,),
+                              Image.asset('images/receipt2.png', height: 65, width: 65,),
                               Text('Transaction Receipt', style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'DejaVu Sans',
@@ -139,17 +152,13 @@ class ViewReceipt extends StatelessWidget {
                               Text(kNaira, style: TextStyle(fontSize: 18,
                                   fontWeight: FontWeight.bold, fontFamily: 'Courier', color: kButtonColor),),
                               SizedBox(width: 2,),
-                              BalanceText(
-                                  double
-                                      .parse(
-                                      receiptData['Amount'].split(' ').first
-                                  ), 30, 18, color: kButtonColor),
+                              BalanceText(double.parse(receiptData['Paid Amount'].toString()), 30, 18, color: kButtonColor),
                               SizedBox(width: 0,),
                             ],
                           ),
-                          Text('Successful', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold),),
+                          Text(receiptData['Status'], style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold),),
                           Text(DateFormat('MMMM dd, yyyy hh:mm a').
-                          format(DateTime.now()), style: GoogleFonts.inter(),),
+                          format(date), style: GoogleFonts.inter(),),
                           Divider(),
                         ],
                       ),
@@ -163,7 +172,13 @@ class ViewReceipt extends StatelessWidget {
                           ...List.generate(receiptData.length, (index)
                           {
                             String key = receiptData.keys.toList()[index];
-                            String value = receiptData.values.toList()[index];
+                            dynamic value = receiptData.values.toList()[index];
+                            if (key == 'Status' || key == 'Date' || key == 'Paid Amount'
+                                || key == 'pins' ||
+                                key == 'waec_registration-tokens'
+                                || key == 'waec_result_cards' || key == 'request_id') {
+                              return SizedBox();
+                            }
                             return Column(
                               children: [
                                 key == 'Transaction ID' || key == 'Token' ?
@@ -172,9 +187,9 @@ class ViewReceipt extends StatelessWidget {
                                   children: [
                                     Text(key,
                                       style: GoogleFonts.inter(
-                                          color: Colors.white70,
+                                          color: Colors.white60,
                                           fontSize: 13,
-                                          fontWeight: FontWeight.bold
+                                          fontWeight: FontWeight.w400
                                       ),),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -183,10 +198,10 @@ class ViewReceipt extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.inter(
                                             // fontFamily:  'Courier',
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w500,
                                               decoration: TextDecoration.underline,
                                               decorationColor: Colors.white,
-                                              fontSize: 14,
+                                              fontSize: 13,
                                               color: Colors.white
                                           ),),
                                         SizedBox(width: 5,),
@@ -199,7 +214,43 @@ class ViewReceipt extends StatelessWidget {
                                                 message: 'Token Copied Successfully!'
                                             );
                                           },
-                                          child: Icon(Icons.copy, size: 15,),
+                                          child: Icon(Icons.copy, size: 15, color: kIconColor,),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ) : key == 'Bonus Earned' ?
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(key,
+                                      style: GoogleFonts.inter(
+                                          color: Colors.white60,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400
+                                      ),),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(value,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              decorationColor: Colors.white,
+                                              fontSize: 13,
+                                              color: kIconColor
+                                          ),),
+                                        SizedBox(width: 5,),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Clipboard.setData(ClipboardData(text: value));
+                                            FlushBarMessage
+                                                .showFlushBar(
+                                                context: context,
+                                                message: 'Token Copied Successfully!'
+                                            );
+                                          },
+                                          child: Icon(Icons.gpp_good, size: 15, color: kIconColor,),
                                         )
                                       ],
                                     ),
@@ -210,17 +261,20 @@ class ViewReceipt extends StatelessWidget {
                                   children: [
                                     Text(key,
                                       style: GoogleFonts.inter(
-                                          color: Colors.white70,
+                                          color: Colors.white60,
 
                                           fontSize: 13,
-                                          fontWeight: FontWeight.bold
+                                          fontWeight: FontWeight.w400
                                       ),),
-                                    Text(value,
-                                      style: GoogleFonts.inter(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold
-                                      ),),
+                                    SizedBox(width: 15,),
+                                    Flexible(
+                                      child: Text(softWrap: false, value,
+                                        style: GoogleFonts.inter(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500
+                                        ),),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 15,)
@@ -231,7 +285,7 @@ class ViewReceipt extends StatelessWidget {
                           SizedBox(height: 40,),
                           DashedLine(height: 1,),
                           SizedBox(height: 10,),
-                          Text('Enjoy a better life with ElitePay. Book flight, book hotel, spend in foreign currencies, get '
+                          Text('Enjoy a better life with NexPay. Book flight, book hotel, spend in foreign currencies, get '
                               'virtual foreign cards, pay all your bills',
                             style: TextStyle(color: Colors.white70, fontSize: 12),)
                         ]
@@ -251,14 +305,15 @@ class ViewReceipt extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      await ReceiptBuilder().exportToPdf(receiptData);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Exporting your report...')),
+                        const SnackBar(content: Text('Generating your receipt...'), backgroundColor: kCardColor,),
                       );
+                      await ReceiptBuilder().exportToPdf(receiptData['Transaction ID'], context);
+                      Navigator.pop(context);
                     },
                     child: Container(
                       padding: EdgeInsetsGeometry.symmetric(
-                          vertical: 8, horizontal: 30),
+                          vertical: 8, horizontal: 15),
                       decoration: BoxDecoration(
                           color: kButtonColor,
                           border: Border.all(
@@ -267,10 +322,9 @@ class ViewReceipt extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Text('Share as PDF', style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'DejaVu Sans',
-                          fontSize: 10,
+                      child: Text(receiptData.containsKey('pin') ? 'Download PINS & Share' : 'Share as PDF' , style: GoogleFonts.inter(
+                          color: Colors.black,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold
                       ),),
                     ),
@@ -280,7 +334,7 @@ class ViewReceipt extends StatelessWidget {
                     onTap: generateAndShareImage,
                     child: Container(
                       padding: EdgeInsetsGeometry.symmetric(
-                          vertical: 8, horizontal: 30),
+                          vertical: 8, horizontal: 15),
                       decoration: BoxDecoration(
                           color: kButtonColor,
                           border: Border.all(
@@ -289,10 +343,9 @@ class ViewReceipt extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Text('Share as Image', style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'DejaVu Sans',
-                          fontSize: 10,
+                      child: Text('Share as image', style: GoogleFonts.inter(
+                          color: Colors.black,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold
                       ),),
                     ),

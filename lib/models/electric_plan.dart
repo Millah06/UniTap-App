@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 class ElectricPlanModel {
-  String amount;
+  double amount;
   String ? cashBack;
   ElectricPlanModel({ this.cashBack, required this.amount,});
 }

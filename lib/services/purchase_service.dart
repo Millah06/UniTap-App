@@ -5,13 +5,20 @@ import 'package:everywhere/constraints/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:uuid/uuid.dart';
 
 
 import 'package:intl/intl.dart';
 
+import 'brain.dart';
+
 class PurchaseItems {
+
+  BuildContext context;
+
+  PurchaseItems({required this.context});
 
   final dio = Dio();
 
@@ -19,7 +26,14 @@ class PurchaseItems {
 
   bool get isLoading => _isLoading;
 
-  String baseURL = "https://everywhere-data-app.onrender.com";
+
+
+  String? getBaseURL() {
+    final pov = Provider.of<Brain>(context, listen: false);
+    String? baseURL = pov.baseURL;
+    return baseURL;
+  }
+
 
   Future<String?> getIdToken() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -56,37 +70,58 @@ class PurchaseItems {
     return '$dateTimePart$uuidPart';
   }
 
-  Future<void> getAvailableJambServices() async {
+  Future<Map<String, dynamic>> checkTransactionStatus(String transactionId) async {
     final idToken = await getIdToken();
     final dio = Dio();
+
     try {
-      var response = await dio.get(
-        "$baseURL/exams/jambServices",
-        options: Options(
-          headers: {
-            "Authorization": "Bearer $idToken",
-            "Content-Type": "application/json",
-          }
-        )
+      final response = await dio.get(
+        "${getBaseURL()}/transactions/status/$transactionId",
+        options: Options(headers: {
+          "Authorization": "Bearer $idToken",
+          "Content-Type": "application/json",
+        }),
       );
-      print(response.data);
+
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        return Map<String, dynamic>.from(response.data);
+      }
+
+      return {
+        'status': false,
+        'message': 'No response from server',
+        'transaction_id': transactionId,
+        'date': DateTime.now().toIso8601String(),
+      };
+    } catch (e) {
+      return {
+        'status': false,
+        'message': 'Failed to fetch transaction',
+        'transaction_id': transactionId,
+        'date': DateTime.now().toIso8601String(),
+      };
     }
-    catch(e) {}
   }
 
-  Future<void> purchaseJamb(String profileCode, String phoneNumber, String variationCode) async {
+
+
+  Future<Map<String, dynamic>?> purchaseJamb(String profileCode, String phoneNumber, String variationCode, String amount) async {
     final dio = Dio();
     final idToken = await getIdToken();
     String requestID = generateRequestId();
+    String transactionID = generateTransactionId();
+    Map<String, dynamic>? result;
     try{
       final response = await dio.post(
-          'https://sandbox.vtpass.com/api/pay',
+          "${getBaseURL()}/electricity/purchaseElectric",
           data: {
             'requestID': requestID,
             'serviceID': 'jamb',
-            'accountID' : profileCode,
-            'phoneNumber': phoneNumber,
-            'variationCode': variationCode
+            'phoneNumber' : phoneNumber,
+            'amount': amount,
+            // 'meterNumber': profileCode,
+            'meterNumber' : profileCode,
+            'meterType': variationCode
           },
           options: Options(
               headers: {
@@ -96,18 +131,133 @@ class PurchaseItems {
           )
       );
       if (response.data != null) {
+        print(requestID);
         print(response.data);
+        result = {
+          'status': response.data['response']['content']['transactions']['status'] == 'delivered',
+          'token' : response.data['response']['purchased_code'].split(' : ')[1],
+          'amount' : response.data['response']['amount'],
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
+        };
       }
       else {
         print(response.headers);
       }
+      return result;
     }
     catch(e){
-      print(e);
+      rethrow;
     }
-    _isLoading = false;
 
   }
+
+  Future<Map<String, dynamic>?> purchaseWaecRegistration(String phoneNumber, String variationCode, String amount, int quantity) async {
+    final dio = Dio();
+    final idToken = await getIdToken();
+    String requestID = generateRequestId();
+    String transactionID = generateTransactionId();
+    Map<String, dynamic>? result;
+    try{
+      final response = await dio.post(
+          "${getBaseURL()}/electricity/purchaseElectric",
+          data: {
+            'requestID': requestID,
+            'serviceID': 'waec-registration',
+            'phoneNumber' : phoneNumber,
+            'amount': amount,
+            'meterType': variationCode,
+            'quantity' : quantity
+          },
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $idToken",
+                "Content-Type": "application/json",
+              }
+          )
+      );
+      print(response.data);
+      if (response.data != null) {
+        print(requestID);
+        print(response.data);
+        result = {
+          'status': response.data['response']['content']['transactions']['status'] == 'delivered',
+          if (quantity == 1)
+          'token' : response.data['response']['purchased_code'].split(":")[1],
+          if (quantity > 1)
+          'tokens' : jsonEncode(response.data['response']['tokens']),
+          'amount' : response.data['response']['amount'],
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
+        };
+      }
+      else {
+        print(response.headers);
+      }
+      return result;
+    }
+    catch(e){
+      rethrow;
+    }
+
+  }
+
+  Future<Map<String, dynamic>?> purchaseWaecResultPin(int quantity, String phoneNumber, String variationCode, String amount) async {
+    final dio = Dio();
+    final idToken = await getIdToken();
+    String requestID = generateRequestId();
+    String transactionID = generateTransactionId();
+    Map<String, dynamic>? result;
+    try{
+      final response = await dio.post(
+          "${getBaseURL()}/electricity/purchaseElectric",
+          data: {
+            'requestID': requestID,
+            'serviceID': 'waec',
+            'phoneNumber' : phoneNumber,
+            'amount': amount,
+            'meterType': variationCode,
+            'quantity' : quantity
+          },
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $idToken",
+                "Content-Type": "application/json",
+              }
+          )
+      );
+      if (response.data != null) {
+        print(requestID);
+        print(jsonEncode(response.data));
+        String pin = response.data['response']['purchased_code'].split(",")[1].split(':')[1];
+        String serial = response.data['response']['purchased_code'].split(",")[0].split(':')[1];
+        result = {
+          'status': response.data['response']['content']['transactions']['status'] == 'delivered',
+          if (quantity == 1)
+          'token' : 'PIN : $pin',
+          if (quantity == 1)
+          'serial' : 'Serial : $serial',
+          if (quantity > 1)
+          'tokens' : jsonEncode(response.data['response']['cards']),
+          'amount' : response.data['response']['amount'],
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
+        };
+      }
+      else {
+        print(response.headers);
+      }
+      return result;
+    }
+    catch(e){
+      rethrow;
+    }
+
+  }
+
 
   Future<Map<String, String>?> createVa(String phone, String email, String name) async {
     final idToken = await getIdToken();
@@ -115,11 +265,11 @@ class PurchaseItems {
     Map<String, String> ? accountData;
     try {
       var response = await dio.post(
-        "$baseURL/wallet/createVA",
+        "${getBaseURL() ?? "https://everywhere-data-app.onrender.com"}/wallet/createVA",
         data: {
-          "phone" : '08111111111',
-          "email": 'example@gmail.com',
-          "name": 'Abdullahi Aliyu',
+          "phone" : phone,
+          "email": email,
+          "name": name,
         },
         options: Options(
           headers: {
@@ -129,6 +279,7 @@ class PurchaseItems {
         ),
       );
       if (response.data != null) {
+        print(response.data);
         accountData = {
           'bank_name': response.data['data']['bank']['name'],
           'account_name' : response.data['data']['account_name'],
@@ -145,7 +296,58 @@ class PurchaseItems {
     }
   }
 
-  Future<Map<String, dynamic>?> purchaseAirtime(String phone, String serviceId, String amount) async {
+  Future<Map<String, dynamic>?> purchaseAirtime(
+      {
+    required String clientRequestId,
+    required String humanRef,
+    required String phone,
+    required String serviceId,
+    required bool isRecharge,
+    required useReward,
+    required String amount}
+      ) async {
+
+    final idToken = await getIdToken();
+    final dio = Dio();
+    String requestID = generateRequestId();
+    Map<String, dynamic>? result;
+    try {
+      var response = await dio.post(
+        "${getBaseURL()}/airtime/sendAirtime",
+        data: {
+          "requestID" : requestID,
+          "network": serviceId,
+          "phoneNumber": phone,
+          "amount": amount,
+          "useReward": useReward,
+          "isRecharge": isRecharge,
+          "humanRef": humanRef,
+          "clientRequestId": clientRequestId,
+        },
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $idToken",
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+      if (response.data != null) {
+        result = response.data;
+        print(result);
+      }
+      else {
+        print(response.headers);
+      }
+      print(result);
+      return result;
+    }
+    catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>?> purchaseRechargePin(String network, String networkAmount, String quantity, String nameCard) async {
     final idToken = await getIdToken();
     final dio = Dio();
     String requestID = generateRequestId();
@@ -153,12 +355,12 @@ class PurchaseItems {
     Map<String, dynamic>? result;
     try {
       var response = await dio.post(
-        "$baseURL/airtime/sendAirtime",
+        "${getBaseURL()}/airtime/sendRecharge",
         data: {
-          "requestID" : requestID,
-          "network": serviceId,
-          "phoneNumber": '08011111111',
-          "amount": amount,
+          "network" : network == 'MTN' ? '1' : network == 'GLO' ? '2' : network == '9MOBILE' ? '3' : '4',
+          "network_amount": networkAmount,
+          "quantity": quantity,
+          "name_on_card": nameCard,
         },
         options: Options(
           headers: {
@@ -171,11 +373,11 @@ class PurchaseItems {
         print(requestID);
         print(response.data);
         result = {
-          'status': response.data['response']['content']
-          ['transactions']['status'] == 'delivered',
-          'message' : response.data['response']['content']['transactions']['product_name'],
-          'amount' : response.data['response']['amount'],
-          'transaction_ID' : transactionID
+          'status': response.data['status'] == 'success',
+          'pin' : response.data['response'],
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
         };
       }
       else {
@@ -187,11 +389,21 @@ class PurchaseItems {
       print(e);
       rethrow;
     }
-    // _isLoading = false;
-    // return null;
   }
 
-  Future<Map<String, dynamic>?> purchaseData(String variationCode, String network) async {
+  Future<Map<String, dynamic>?> purchaseData(
+      {
+        required String variationCode,
+        required String clientRequestId,
+        required String humanRef,
+        required String phone,
+        required String network,
+        required bool isRecharge,
+        required useReward,
+        required String amount,
+        required String plan
+      }
+      ) async {
     final idToken = await getIdToken();
     final dio = Dio();
     String requestID = generateRequestId();
@@ -199,12 +411,18 @@ class PurchaseItems {
     Map<String, dynamic>? result;
     try{
       var response = await dio.post(
-        "$baseURL/data/buyData",
+        "${getBaseURL()}/data/buyData",
         data: {
-          "requestID": DateTime.now().toString(),
+          "requestID": requestID,
           "network": "${network.toLowerCase()}-data",
           "variationCode" : variationCode,
-          "phoneNumber" : '08011111111'
+          "phoneNumber" : phone,
+          "plan": plan,
+          "amount": amount,
+          "useReward": useReward,
+          "isRecharge": isRecharge,
+          "humanRef": humanRef,
+          "clientRequestId": clientRequestId,
         },
         options: Options(
           headers: {
@@ -218,11 +436,14 @@ class PurchaseItems {
         print(response.data);
         print(variationCode);
         result = {
-          'status': response.data['status'] == 'success',
+          'status': response.data['response']['content']
+          ['transactions']['status'] == 'delivered',
           'phoneNumber' : response.data['response']['content']
           ['transactions']['unique_element'],
           'amount' : response.data['response']['amount'],
-          'transaction_ID' : transactionID
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
         };
       }
       else {
@@ -235,7 +456,19 @@ class PurchaseItems {
     }
   }
 
-  Future<Map<String, dynamic>?> purchaseTV(String variationCode, String serviceID) async {
+  Future<Map<String, dynamic>?> purchaseTV(
+      {
+        required String variationCode,
+        required String serviceID,
+        required String phoneNumber,
+        required String cableNumber,
+        required String clientRequestId,
+        required String humanRef,
+        required bool isRecharge,
+        required useReward,
+        required String amount,
+      }
+      ) async {
     final dio = Dio();
     final idToken = await getIdToken();
     String requestID = generateRequestId();
@@ -243,14 +476,19 @@ class PurchaseItems {
     Map<String, dynamic>? result;
     try{
       var response = await dio.post(
-          "$baseURL/cable/purchaseTV",
+          "${getBaseURL()}/cable/purchaseTV",
           data: {
             'requestID': requestID,
-            'serviceID': 'dstv',
-            'phoneNumber' : '08087798514',
+            'serviceID': serviceID.toLowerCase(),
+            'phoneNumber' : phoneNumber,
             'subscriptionType': 'change',
             'variationCode': variationCode,
-            'smartCard': '1212121212'
+            'smartCard': cableNumber,
+            "amount": amount,
+            "useReward": useReward,
+            "isRecharge": isRecharge,
+            "humanRef": humanRef,
+            "clientRequestId": clientRequestId,
           },
           options: Options(
               headers: {
@@ -269,7 +507,9 @@ class PurchaseItems {
           ['transactions']['product_name'],
           'token' : response.data['response']['Token'],
           'amount' : response.data['response']['amount'],
-          'transaction_ID' : transactionID
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
         };
       }
       else {
@@ -293,13 +533,13 @@ class PurchaseItems {
     Map<String, dynamic>? result;
     try{
       final response = await dio.post(
-          "$baseURL/electricity/purchaseElectric",
+          "${getBaseURL()}/electricity/purchaseElectric",
           data: {
             'requestID': requestID,
             'serviceID': '${provider.split(' ').first.toLowerCase()}-electric',
             'phoneNumber' : phoneNumber,
             'amount': amount,
-            'meterNumber': '1111111111111',
+            'meterNumber': meterNumber,
             'meterType': meterType
           },
           options: Options(
@@ -310,17 +550,18 @@ class PurchaseItems {
           )
       );
       if (response.data != null) {
-        print(requestID);
-        print(response.data);
-        result = {
+          result = {
           'status': response.data['response']['content']['transactions']['status'] == 'delivered' ?
           true : false,
           'message' : response.data['response']['content']['transactions']
           ['product_name'],
           'token' : response.data['response']['Token'],
           'amount' : response.data['response']['amount'],
-          'transaction_ID' : transactionID
+          'transaction_ID' : transactionID,
+            "requestID": requestID,
+          'date' : DateTime.now(),
         };
+
       }
       else {
         print(response.headers);
@@ -332,7 +573,7 @@ class PurchaseItems {
     }
   }
 
-  Future<Map<String, dynamic>?> purchaseSmile(String accountID, variationCode) async {
+  Future<Map<String, dynamic>?> purchaseSmile(String accountID, variationCode, String phoneNumber) async {
     final dio = Dio();
     final idToken = await getIdToken();
     String requestID = generateRequestId();
@@ -340,12 +581,12 @@ class PurchaseItems {
     Map<String, dynamic>? result;
     try{
       final response = await dio.post(
-          "$baseURL/data/purchaseSmile",
+          "${getBaseURL()}/data/purchaseSmile",
           data: {
             'requestID': requestID,
             'serviceID': 'smile-direct',
-            'accountID' : '08011111111',
-            'phoneNumber': '08087798415',
+            'accountID' : accountID,
+            'phoneNumber': phoneNumber,
             'variationCode': variationCode
           },
           options: Options(
@@ -359,14 +600,16 @@ class PurchaseItems {
         print(requestID);
         print(response.data);
         result = {
-          'status': response.data['response']['content']['transactions']['status'] == 'delivered' ?
-          true : false,
+          'status': response.data['response']['content']['transactions']['status'] == 'delivered',
           'message' : response.data['response']['content']['transactions']['product_name'],
           'amount' : response.data['response']['amount'],
+          'transaction_ID' : transactionID,
+          "requestID": requestID,
+          'date' : DateTime.now(),
         };
       }
       else {
-        print(response.headers);
+
       }
       return result;
     }
@@ -382,9 +625,9 @@ class PurchaseItems {
     final dio = Dio();
     try{
       var response = await dio.post(
-          '$baseURL/cable/verifyMerchant',
+          '${getBaseURL()}/cable/verifyMerchant',
           data: {
-            "smartCard": "tester@sandbox.com",
+            "smartCard": smileEmail,
             "serviceID": 'smile-direct'
           },
           options: Options(
@@ -417,11 +660,12 @@ class PurchaseItems {
   Future<Map<String, dynamic>?> verifyCable(String smartCardNumber, String serviceID) async {
     final idToken = await getIdToken();
     final dio = Dio();
+    Map<String, dynamic>? result;
     try{
       var response = await dio.post(
-        '$baseURL/cable/verifyMerchant',
+        '${getBaseURL()}/cable/verifyMerchant',
         data: {
-          "smartCard": "1212121212",
+          "smartCard": smartCardNumber,
           "serviceID": serviceID.toLowerCase()
         },
         options: Options(
@@ -431,35 +675,40 @@ class PurchaseItems {
           },
         )
       );
-      if (response.data != null) {
+      if (response.data != null && !response.data['response']['content'].containsKey('error')) {
         print(response.data);
+        result = {
+          'name' : response.data['response']['content']['Customer_Name'],
+          'status' : response.data['response']['content']['Status'],
+          'provider': response.data['response']['content']['Customer_Type'],
+          'Date': response.data['response']['content']['Due_Date'].split('T').first.toString()
+        };
       }
       else {
+        print(response.data);
+        print(result);
+        result = {};
       }
-      return {
-        'name' : response.data['response']['content']['Customer_Name'],
-        'status' : response.data['response']['content']['Status'],
-        'provider': response.data['response']['content']['Customer_Type'],
-        'Date': response.data['response']['content']['Due_Date'].split('T').first.toString()
-      };
+      return result;
     }
     catch (e) {
-      print(e);
+      rethrow;
     }
-    _isLoading = false;
-    return null;
   }
 
-  Future<Map<String, dynamic>?> verifyMeter({required String meterType, required String meterNumber, required String serviceID}) async {
+  Future<Map<String, dynamic>?> verifyMeter({required String meterType,
+    required String meterNumber, required String selectedProvider}) async {
     final idToken = await getIdToken();
     final dio = Dio();
+    Map<String, dynamic>? result;
+
     try{
       var response = await dio.post(
-          '$baseURL/electricity/verifyMeter',
+          '${getBaseURL()}/electricity/verifyMeter',
           data: {
             'meterType': meterType,
-            "serviceID": '${serviceID.split(' ')[0].toLowerCase()}-electric',
-            "meterNumber": "1111111111111",
+            "serviceID": '${selectedProvider.split(' ')[0].toLowerCase()}-electric',
+            "meterNumber": meterNumber,
           },
           options: Options(
             headers: {
@@ -468,23 +717,22 @@ class PurchaseItems {
             },
           )
       );
-      if (response.data != null) {
-        print(response.data);
+      if (response.data != null && !response.data['response']['content'].containsKey('error')) {
+        result = {
+          'name' : response.data['response']['content']['Customer_Name'],
+          'address' : response.data['response']['content']['Address'],
+          'minimumPurchase': response.data['response']['content']['Min_Purchase_Amount'],
+          'meterType': response.data['response']['content']['Meter_Type']
+        };
       }
       else {
+        result = {};
       }
-      return {
-        'name' : response.data['response']['content']['Customer_Name'],
-        'address' : response.data['response']['content']['Address'],
-        'minimumPurchase': response.data['response']['content']['Min_Purchase_Amount'],
-        'meterType': response.data['response']['content']['Meter_Type']
-      };
+      return result;
     }
     catch (e) {
-      print(e);
+      rethrow;
     }
-    _isLoading = false;
-    return null;
   }
 
   Future<String?> verifyJambCandidate(String serviceType, String profileCode) async {
@@ -492,11 +740,11 @@ class PurchaseItems {
     final dio = Dio();
     try{
       var response = await dio.post(
-          '$baseURL/electricity/verifyMeter',
+          '${getBaseURL()}/electricity/verifyMeter',
           data: {
             'meterType': serviceType,
             "serviceID": 'jamb',
-            "meterNumber": "0123456789",
+            "meterNumber": profileCode,
           },
           options: Options(
             headers: {
@@ -510,7 +758,7 @@ class PurchaseItems {
       }
       else {
       }
-      return response.data['content']['Customer_Name'];
+      return response.data['response']['content']['Customer_Name'];
     }
     catch (e) {
       print(e);

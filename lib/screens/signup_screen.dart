@@ -6,10 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
 import '../services/auth_service.dart';
+import '../services/session_service.dart';
 
 class SignUpScreen extends StatefulWidget {
 
@@ -138,12 +140,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'This field is required';
                                   }
+                                  if (!value.split('').contains(' ')) {
+                                    return 'Two Names are required';
+                                  }
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  if (value.isEmpty) {
-                                    _formKey2.currentState!.reset();
-                                  }
 
                                 },
                                 onTap: () {
@@ -319,12 +321,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               );
                               try {
                                 // Attempt login
-                                await Authentication().userSignUp(
+                                final user = await Authentication(context: context).userSignUp(
                                     _emailController.text,
                                     _password1controller.text,
                                     _userNameController.text,
                                   _phoneController.text
                                 );
+
+                                Provider.of<SessionProvider>(context, listen: false).login(user!.uid);
                                 // Close loading spinner
                                 Navigator.pop(context);
                                 // Show success message
@@ -366,7 +370,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                           ),
                           child: Text('Proceed',
-                              style: TextStyle(color: Colors.white,
+                              style: TextStyle(color: Colors.black,
                                   fontWeight: FontWeight.w700, fontSize: 18)
                           ),
                         ),

@@ -1,7 +1,6 @@
 {
-  "functions":
+  "functions": [
     {
-      "source": "function",
       "codebase": "function",
       "ignore": [
         "node_modules",
@@ -12,8 +11,10 @@
       ],
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
-    },
+      ],
+      "source": "function"
+    }
+  ],
   "emulators": {
     "functions": {
       "port": 5001

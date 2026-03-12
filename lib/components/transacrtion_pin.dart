@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
+import '../constraints/constants.dart';
 import '../services/brain.dart';
+import 'flush_bar_message.dart';
 
  class TransactionPin extends StatelessWidget {
 
    final Function(String) onCompleted;
    final Function() onForgotPin;
-   const TransactionPin({super.key, required this.onCompleted, required this.onForgotPin});
+   final Function() onCorrect;
+   const TransactionPin({super.key, required this.onCompleted, required this.onForgotPin, required this.onCorrect});
 
    @override
    Widget build(BuildContext context) {
@@ -24,9 +27,17 @@ import '../services/brain.dart';
              final bool canAuthenticate =
                  canAuthenticateWithBiometrics || await auth.isDeviceSupported();
              if (canAuthenticate) {
-               await auth.authenticate(
-                   localizedReason: 'Use Fingerprint to confirm transaction',
-                   options: const AuthenticationOptions(biometricOnly: true)
+               bool result = await auth.authenticate(
+                   localizedReason: 'Use Fingerprint  to confirm transaction',
+                   options: const AuthenticationOptions(biometricOnly: true),
+               );
+               result ?   onCorrect() :
+               FlushBarMessage.showFlushBar(
+                 context: context,
+                 message: 'Your device does\'nt support this method, use passcode instead.',
+                 title: 'Ops',
+                 icon: Icon(Icons.error_outline,
+                   color: kErrorIconColor, size: 30,),
                );
              }
            }

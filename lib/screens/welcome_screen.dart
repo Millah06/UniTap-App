@@ -67,7 +67,7 @@ class WelcomeScreen extends StatelessWidget {
                               backgroundColor: Color(0xFF21D3ED),
                               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 100)
                             ),
-                            child: Text('Login', style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
+                            child: Text('Login', style: GoogleFonts.inter(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18)),
                           ),
                           ElevatedButton(
                             onPressed: () {

@@ -3,12 +3,16 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:everywhere/constraints/constants.dart';
 import 'package:everywhere/screens/bottom_navigation/profile_settings_screen.dart';
 import 'package:everywhere/screens/bottom_navigation/promotion.dart';
+import 'package:everywhere/screens/bottom_navigation/social_feature/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../screens/bottom_navigation/chats/chat_screen.dart';
+import '../screens/bottom_navigation/profile/profile_screen.dart';
+import '../screens/bottom_navigation/profile/user_profile_screen.dart';
 import '../screens/bottom_navigation/wallet_screen.dart';
-import '../screens/bottom_navigation/home_screen.dart';
+import '../screens/bottom_navigation/services_screen.dart';
 
 
 class BottomBar extends StatefulWidget {
@@ -24,10 +28,11 @@ class _BottomBarState extends State<BottomBar> {
 
   int selectedIndex = 0;
   final List<Widget> screens = [
+    const FeedScreen(),
+    const Messages(),
     const HomeScreen(),
     const WalletScreen(),
-    TemplateSelectionScreen(),
-    const  ProfileSettingsScreen()
+    const  ProfileScreen()
   ];
 
   void _onPageChange(int index) {
@@ -55,13 +60,11 @@ class _BottomBarState extends State<BottomBar> {
 
   CurvedNavigationBar _bottomNavigationBar () {
     return CurvedNavigationBar(
-      // backgroundColor: Colors.white60,
-      //   buttonBackgroundColor: Color(0xFF177E85),
         color: Color(0xFF334155),
 
         backgroundColor: Color(0xFF0F172A),
         animationCurve: Curves.decelerate,
-        height: 55,
+        height: 60,
         index: selectedIndex,
         // currentIndex: selectedIndex,
         // // selectedItemColor: Color(0xFFF45F1A) ,
@@ -73,74 +76,90 @@ class _BottomBarState extends State<BottomBar> {
         items:
         [
           Container(
-            margin: EdgeInsets.only(bottom: selectedIndex == 0 ? 0 : 25),
+            margin: EdgeInsets.only(bottom: selectedIndex == 0 ? 0 : 15),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(FontAwesomeIcons.house,
+                  Icon(FontAwesomeIcons.compass,
                     size: selectedIndex == 0 ? 15 : 20,
                     color: selectedIndex == 0 ? Color(0xFF21D3ED) :
                     Colors.white38,),
-                  Visibility(
-                    visible: selectedIndex == 0,
-                      child: Text('Home', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
-                  )
+                  SizedBox(height: 3.5,),
+                  Text('Explore', style: GoogleFonts.inter(fontSize: 9,
+                      fontWeight: FontWeight.w900, color: selectedIndex == 0 ? Colors.white : Colors.white60),)
                 ],
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: selectedIndex == 1 ? 0 : 25),
+            margin: EdgeInsets.only(bottom: selectedIndex == 1 ? 0 : 14),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(FontAwesomeIcons.message,
+                    size: selectedIndex == 1 ? 15 : 20, color: selectedIndex == 1 ? Color(0xFF21D3ED) :
+                      Colors.white38),
+                  SizedBox(height: 3.5,),
+                  Text('Messages',
+                  style: GoogleFonts.inter(fontSize: 9,
+                      fontWeight: FontWeight.w900, color: selectedIndex == 1 ? Colors.white : Colors.white60)),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: selectedIndex == 2 ? 0 : 15),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(FontAwesomeIcons.layerGroup,
+                      size: selectedIndex == 2 ? 15 : 20, color: selectedIndex == 2 ? Color(0xFF21D3ED) :
+                      Colors.white38),
+                  SizedBox(height: 3.5,),
+                  Text('Services',
+                    style: GoogleFonts.inter(fontSize: 9,
+                        fontWeight: FontWeight.w900,  color: selectedIndex == 2 ? Colors.white : Colors.white60),)
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: selectedIndex == 3 ? 0 : 15),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(FontAwesomeIcons.wallet,
-                    size: selectedIndex == 1 ? 15 : 20, color: selectedIndex == 1 ? Color(0xFF21D3ED) :
-                    Colors.white38,),
-                  Visibility(
-                      visible: selectedIndex == 1,
-                      child: Text('Wallet', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: selectedIndex == 2 ? 0 : 25),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(FontAwesomeIcons.newspaper,
-                    size: selectedIndex == 2 ? 15 : 20, color: selectedIndex == 2 ? Color(0xFF21D3ED) :
-                      Colors.white38),
-                  Visibility(
-                      visible: selectedIndex == 2,
-                      child: Text('Chances', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: selectedIndex == 3 ? 0 : 25),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(FontAwesomeIcons.userGear,
                     size: selectedIndex == 3 ? 15 : 20, color: selectedIndex == 3 ? Color(0xFF21D3ED) :
+                    Colors.white38,),
+                  SizedBox(height: 3.5,),
+                  Text('Wallet',
+                    style: GoogleFonts.inter(fontSize: 9,
+                        fontWeight: FontWeight.w900,  color: selectedIndex == 3 ? Colors.white : Colors.white60),)
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: selectedIndex == 4 ? 0 : 15),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(FontAwesomeIcons.circleUser,
+                    size: selectedIndex == 4 ? 15 : 20, color: selectedIndex == 4 ? Color(0xFF21D3ED) :
                       Colors.white38),
-                  Visibility(
-                      visible: selectedIndex == 3,
-                      child: Text('Profile', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900),)
-                  )
+                  SizedBox(height: 3.5,),
+                  Text('Profile', style: GoogleFonts.inter(fontSize: 9,
+                      fontWeight: FontWeight.w900,  color: selectedIndex == 4 ? Colors.white : Colors.white60),)
                 ],
               ),
             ),

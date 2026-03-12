@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class ServiceModel {
+  bool ? isNew;
   String name;
-  Icon icon;
+  IconData icon;
   Function() function;
 
-  ServiceModel({required this.name, required this.icon, required this.function});
+  ServiceModel({required this.name, required this.icon, required this.function, this.isNew});
 }

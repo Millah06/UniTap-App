@@ -1,0 +1,184 @@
+// lib/models/user_profile_model.dart - NEW
+
+// lib/models/user_profile_model.dart - COMPLETE VERSION
+
+// lib/models/user_profile_model.dart - FIX BADGES PARSING
+
+class UserProfile {
+  final String userId;
+  final String username;
+  final String displayName;
+  final String? bio;
+  final String? chatTag;
+  final String? transferUID;
+  final String? email;
+  final String? phoneNumber;
+  final String? avatar;
+  final String? coverImage;
+  final String? website;
+  final String? location;
+
+  // Privacy
+  final bool isPrivate;
+  final bool allowFollowersToMessage;
+
+  // Stats
+  final int followerCount;
+  final int followingCount;
+  final int postCount;
+  final int repostCount;
+
+  // Earnings
+  final double totalRewardPointsEarned;
+  final double totalNairaEarned;
+  final double weeklyPoints;
+
+  // KYC
+  final bool isKycVerified;
+  final DateTime? kycVerifiedAt;
+
+  // Account
+  final DateTime createdAt;
+  final DateTime lastActiveAt;
+
+  // Badges
+  final Map<String, dynamic> badges;
+
+  bool isFollowing;
+  bool isFollowingYou;
+
+  UserProfile({
+    required this.userId,
+    required this.username,
+    required this.displayName,
+    this.bio,
+    this.chatTag,
+    this.transferUID,
+    this.email,
+    this.phoneNumber,
+    this.avatar,
+    this.coverImage,
+    this.website,
+    this.location,
+    required this.isPrivate,
+    required this.allowFollowersToMessage,
+    required this.followerCount,
+    required this.followingCount,
+    required this.postCount,
+    this.repostCount = 0,
+    required this.totalRewardPointsEarned,
+    required this.totalNairaEarned,
+    required this.weeklyPoints,
+    required this.isKycVerified,
+    this.kycVerifiedAt,
+    required this.createdAt,
+    required this.lastActiveAt,
+    this.badges = const {},
+    this.isFollowing = false,
+    this.isFollowingYou = false,
+  });
+
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    // Parse badges safely - handle both Map and List
+    Map<String, dynamic> parsedBadges = {};
+    final badgesData = json['badges'];
+
+    if (badgesData is Map) {
+      parsedBadges = Map<String, dynamic>.from(badgesData);
+    } else if (badgesData is List) {
+      // If it's a list (empty array from backend), convert to empty map
+      parsedBadges = {};
+    }
+
+    return UserProfile(
+      userId: json['userId'] ?? '',
+      username: json['username'] ?? 'Anonymous',
+      displayName: json['displayName'] ?? json['username'] ?? 'Anonymous',
+      bio: json['bio'],
+      chatTag: json['chatTag'],
+      transferUID: json['transferUID'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
+      avatar: json['avatar'],
+      coverImage: json['coverImage'],
+      website: json['website'],
+      location: json['location'],
+      isPrivate: json['isPrivate'] ?? false,
+      allowFollowersToMessage: json['allowFollowersToMessage'] ?? false,
+      followerCount: json['followerCount'] ?? 0,
+      followingCount: json['followingCount'] ?? 0,
+      postCount: json['postCount'] ?? 0,
+      repostCount: json['repostCount'] ?? 0,
+      totalRewardPointsEarned: (json['totalRewardPointsEarned'] ?? json['totalEarned'] ?? 0).toDouble(),
+      totalNairaEarned: (json['totalNairaEarned'] ?? json['totalEarned'] ?? 0).toDouble(),
+      weeklyPoints: (json['weeklyPoints'] ?? json['weeklyEarned'] ?? 0).toDouble(),
+      isKycVerified: json['isKycVerified'] ?? false,
+      kycVerifiedAt: json['kycVerifiedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['kycVerifiedAt'])
+          : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['createdAt'])
+          : DateTime.now(),
+      lastActiveAt: json['lastActiveAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['lastActiveAt'])
+          : DateTime.now(),
+      badges: parsedBadges,
+      isFollowing: json['isFollowing'] ?? false,
+      isFollowingYou: json['isFollowingYou'] ?? false,
+    );
+  }
+
+  UserProfile copyWith({
+    bool? isFollowing,
+    int? followerCount,
+  }) {
+    return UserProfile(
+      userId: userId,
+      username: username,
+      displayName: displayName,
+      bio: bio,
+      chatTag: chatTag,
+      transferUID: transferUID,
+      email: email,
+      phoneNumber: phoneNumber,
+      avatar: avatar,
+      coverImage: coverImage,
+      website: website,
+      location: location,
+      isPrivate: isPrivate,
+      allowFollowersToMessage: allowFollowersToMessage,
+      followerCount: followerCount ?? this.followerCount,
+      followingCount: followingCount,
+      postCount: postCount,
+      repostCount: repostCount,
+      totalRewardPointsEarned: totalRewardPointsEarned,
+      totalNairaEarned: totalNairaEarned,
+      weeklyPoints: weeklyPoints,
+      isKycVerified: isKycVerified,
+      kycVerifiedAt: kycVerifiedAt,
+      createdAt: createdAt,
+      lastActiveAt: lastActiveAt,
+      badges: badges,
+      isFollowing: isFollowing ?? this.isFollowing,
+      isFollowingYou: isFollowingYou,
+    );
+  }
+
+  bool get hasBlueCheck => badges['kyc_blue']?['awarded'] == true;
+  bool get hasPremium => badges['premium_paid']?['awarded'] == true;
+  bool get isBusiness => badges['business']?['awarded'] == true;
+  bool get isCreator => badges['creator_earnings']?['awarded'] == true;
+
+  List<String> get activeBadges {
+    final List<String> active = [];
+    badges.forEach((key, value) {
+      if (value is Map && value['awarded'] == true) {
+        final expiresAt = value['expiresAt'];
+        if (expiresAt == null || DateTime.now().isBefore(DateTime.fromMillisecondsSinceEpoch(expiresAt))) {
+          active.add(key);
+        }
+      }
+    });
+    return active;
+  }
+}

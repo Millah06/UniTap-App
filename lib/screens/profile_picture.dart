@@ -171,7 +171,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                               ),
                               onPressed: _pickImage,
                               child: Text('Upload profile picture',
-                                  style: TextStyle(color: Colors.white,
+                                  style: TextStyle(color: Colors.black,
                                       fontWeight: FontWeight.w700, fontSize: 16)
                               )),
                           SizedBox(height: 35,),

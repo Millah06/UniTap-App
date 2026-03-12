@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class BalanceText extends StatelessWidget {
+
+  final bool ? isLineThrough;
   final double amount;
   final double biggerSize;
   final double smallerSize;
   final Color ?  color;
 
   const BalanceText(this.amount, this.biggerSize, this.smallerSize,
-      {super.key, this.color});
+      {super.key, this.color, this.isLineThrough});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class BalanceText extends StatelessWidget {
     return Text.rich(
         TextSpan(
           style: TextStyle(
-            fontFamily: 'DejaVu Sans'
+            fontFamily: 'DejaVu Sans',
           ),
             children: [
               TextSpan(

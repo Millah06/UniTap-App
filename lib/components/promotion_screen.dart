@@ -272,10 +272,9 @@ class _PromoCarouselState extends State<PromoCarousel> {
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return SizedBox.shrink(); // Hide carousel if no data
           }
-
           final cards = snapshot.data!.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
           return SizedBox(
-            height: 150,
+            height: 135,
             child: PageView.builder(
               controller: _pageController,
               itemCount: cards.length,
@@ -318,26 +317,33 @@ class _PromoCarouselState extends State<PromoCarousel> {
                         children: [
                           Text(card['title'],
                               style: GoogleFonts.poppins(
-                                  color: Colors.white,
+                                  color: Color(0xFF1E293B),
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: buttonColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                          GestureDetector(
+                            onTap: () {handleAction(card);},
+                            child: Card(
+                              color: Color(0xFF177E85),
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: buttonColor,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [BoxShadow(color: Color(0xFF177E85).withOpacity(0.4),
+                                        blurRadius: 8, spreadRadius: 1, offset: Offset(0, 4))]
+                                ),
+                                child: Text(
+                                  card['buttonText'] ?? 'Explore',
+                                  style: TextStyle(
+                                      color: Colors.black, fontWeight: FontWeight.w900, fontSize: 10),
+                                ),
                               ),
-                            ),
-                            onPressed: () => handleAction(card),
-                            child: Text(
-                              card['buttonText'] ?? 'Explore',
-                              style: TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.w900, fontSize: 12),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: 2),
                       Text(card['subtitle'],
                           style:
                           GoogleFonts.poppins(color: Color(0xFF1E293B), fontSize: 10, fontWeight: FontWeight.bold)),

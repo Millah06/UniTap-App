@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PinEntryScreen extends StatefulWidget {
   final Function(String) onCompleted;
@@ -23,11 +24,13 @@ class PinEntryScreen extends StatefulWidget {
 
 class _PinEntryScreenState extends State<PinEntryScreen> {
   String pin = '';
+  int? currentIndex;
 
   void _handleTap(String digit) {
     if (pin.length < 4) {
       setState(() {
         pin += digit;
+        currentIndex = pin.length - 1;
       });
       if (pin.length == 4) {
         Future.delayed(const Duration(milliseconds: 150), () {
@@ -41,15 +44,18 @@ class _PinEntryScreenState extends State<PinEntryScreen> {
     if (pin.isNotEmpty) {
       setState(() {
         pin = pin.substring(0, pin.length - 1);
+        currentIndex = pin.length - 1;
       });
     }
   }
 
   Widget _buildPinDots() {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(4, (index) {
         bool filled = index < pin.length;
+        bool isSelected = currentIndex == index;
         return Container(
           height: 42,
           padding: EdgeInsets.all(5),
@@ -57,8 +63,9 @@ class _PinEntryScreenState extends State<PinEntryScreen> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.5,
-              color: filled ? Color(0xFF21D3ED) : Colors.white
-            )
+              color: isSelected ? Color(0xFF21D3ED) : filled ? Colors.white : Colors.white54,
+            ),
+            borderRadius: BorderRadius.circular(10)
           ),
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -67,7 +74,7 @@ class _PinEntryScreenState extends State<PinEntryScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               // color: filled ? Colors.white : Colors.grey[700],
-              color: filled ? Color(0xFF21D3ED) : Color(0xFF0F172A),
+              color: isSelected ? Color(0xFF21D3ED) : filled ? Colors.white : Color(0xFF0F172A),
             ),
           ),
         );
@@ -84,18 +91,18 @@ class _PinEntryScreenState extends State<PinEntryScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(height: 0),
-          const Text(
-            "Enter Your 4-digit PIN",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+          Text(
+            "Enter 4-digit PIN",
+            style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
           ),
           const SizedBox(height: 5),
           _buildPinDots(),
           const SizedBox(height: 5),
           GestureDetector(
             onTap: widget.onForgotPin,
-            child: const Text(
+            child: Text(
               "Forgot PIN?",
-              style: TextStyle(
+              style: GoogleFonts.inter(
                 fontSize: 14,
                 color: kButtonColor,
                 fontWeight: FontWeight.w900,
@@ -150,7 +157,7 @@ class CustomPinKeyboard extends StatelessWidget {
                 Image(image: AssetImage('images/eraser.png'), height: 18,
                   fit: BoxFit.cover, width: 18,),
                 SizedBox(width: 10,),
-                Text('EveryWhere Secure Numeric Keyboard', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900),),
+                Text('NexPay Secure Numeric Keyboard', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w900),),
               ],
             ),
           ),

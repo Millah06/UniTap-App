@@ -11,10 +11,12 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
 import '../services/auth_service.dart';
+import '../services/session_service.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -58,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         barrierDismissible: false,
         builder: (context) => Center(child: CircularProgressIndicator()),
       );
+
 
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
@@ -106,46 +109,95 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showForgotPasswordDialog(BuildContext context) {
     final emailController = TextEditingController();
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Reset Password'),
-        content: TextField(
-          controller: emailController,
-          decoration: InputDecoration(
-            hintText: 'Enter your registered email',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (emailController.text.isEmpty || !emailController.text.contains('@')) {
-                Flushbar(
-                  title: 'Invalid Email',
-                  message: 'Please enter a valid email address',
-                  duration: Duration(seconds: 3),
-                  backgroundColor: Colors.red,
-                ).show(context);
-                return;
-              }
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => FractionallySizedBox(
+          heightFactor: 0.9,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text('Reset Password',
+                  style: GoogleFonts.raleway(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                SizedBox(height: 20,),
+                TextField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: Colors.white,
+                  style: kInputTextStyle,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email, size: 20,),
+                    prefixIconColor: Colors.white,
+                    labelText: 'Email',
+                    hintText: 'john@gmail.com',
+                    hintStyle: TextStyle(color: Color(0x8AFFFFFF)),
 
-              await _sendPasswordResetEmail(
-                  context,
-                  emailController.text
-              );
-              Navigator.pop(context);
-            },
-            child: Text('Send Reset Link'),
+                  ),
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      _formKey2.currentState!.reset();
+                    }
+
+                  },
+                  onTap: () {
+                    setState(() {
+                      iconColor = kButtonColor;
+                    });
+                  },
+                ),
+                SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            elevation: 4,
+                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                            side: BorderSide(
+                                color: kButtonColor
+                            )
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancel', style: TextStyle(color: Colors.white),)
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: kButtonColor,
+                            elevation: 4,
+                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50)
+                        ),
+                        onPressed: () async {
+                          if (emailController.text.isEmpty || !emailController.text.contains('@')) {
+                            Flushbar(
+                              title: 'Invalid Email',
+                              message: 'Please enter a valid email address',
+                              duration: Duration(seconds: 3),
+                              backgroundColor: Colors.red,
+                            ).show(context);
+                            return;
+                          }
+
+                          await _sendPasswordResetEmail(
+                              context,
+                              emailController.text
+                          );
+                        },
+                        child: Text('Send Reset Link', style: GoogleFonts.inter(
+                            color: Colors.black, fontWeight: FontWeight.bold),)
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-        ],
-      ),
+        )
     );
   }
+
 
   @override
   void dispose() {
@@ -155,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _password1controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -204,7 +257,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextFormField(
-                                // decoration: kInputStyle,
                                 keyboardType: TextInputType.emailAddress,
                                 cursorColor: Colors.white,
                                 style: kInputTextStyle,
@@ -223,12 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                   return null;
                                 },
-                                onChanged: (value) {
-                                  if (value.isEmpty) {
-                                    _formKey2.currentState!.reset();
-                                  }
 
-                                },
                                 onTap: () {
                                   setState(() {
                                     iconColor = kButtonColor;
@@ -342,10 +389,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                               try {
                                 // Attempt login
-                                await Authentication().userSignIn(
+                                final user = await Authentication(context: context).userSignIn(
                                   _emailController.text,
                                   _password1controller.text,
                                 );
+                                print('this is my uid ${user!.uid}');
+                                Provider.of<SessionProvider>(context, listen: false).login(user!.uid);
                                 // Close loading spinner
                                 Navigator.pop(context);
                                 Navigator.pushReplacement(
@@ -390,7 +439,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                           ),
                           child: Text('Proceed',
-                              style: GoogleFonts.inter(color: Colors.white,
+                              style: GoogleFonts.inter(color: Colors.black,
                                   fontWeight: FontWeight.w700, fontSize: 18)
                           ),
                         ),

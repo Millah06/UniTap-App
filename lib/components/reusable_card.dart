@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ReusableCard extends StatelessWidget {
   const ReusableCard({super.key, required this.child});
@@ -46,8 +47,7 @@ class ReusableCardReceipt extends StatelessWidget {
           children: [
             myIcon,
             SizedBox(width: 10,),
-            Text(text, style: TextStyle(fontWeight: FontWeight.bold,
-                fontFamily: 'Courier'),)
+            Text(text, style: GoogleFonts.inter(fontWeight: FontWeight.bold,),)
           ],
         )
     );

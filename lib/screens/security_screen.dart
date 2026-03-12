@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/bootom_bar.dart';
 import '../constraints/constants.dart';
+import 'community_screen.dart';
 
 class SecurityScreen extends StatefulWidget {
 
@@ -294,11 +295,50 @@ class _SecurityScreenState extends State<SecurityScreen> {
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
+                              FocusScope.of(context).unfocus();
                               if (_formKey.currentState!.validate()) {
-                                await _saveData();
-                                await Brain().getData();
-                                Navigator.pushAndRemoveUntil(
-                                  context, MaterialPageRoute(builder: (_) => BottomBar()), (route) => false,);
+
+                                showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: false,
+                                  enableDrag: false,
+                                  backgroundColor: Colors.black54,
+                                  builder: (_) => const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: CircularProgressIndicator(
+                                          value: 20,
+                                          backgroundColor: kCardColor,
+                                          color: kButtonColor,
+                                        ),
+                                      ),
+                                      Text('Setting up your account..')
+                                    ],
+                                  ),
+                                );
+                                try {
+
+                                  await _saveData();
+
+                                  await Brain().getData();
+
+                                  if (context.mounted) {
+                                    Navigator.pop(context); // Remove loading dialog
+                                  }
+
+                                  // 4. Navigate away
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) => const CommunityScreen(isLogInOut: true,)),
+                                        (route) => false,
+                                  );
+                                } catch (e) {
+                                  // On error, close the sheet too
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Something went wrong: $e")),
+                                  );
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -306,7 +346,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 130)
                             ),
                             child: Text('FINISH',
-                                style: TextStyle(color: Colors.white,
+                                style: TextStyle(color: Colors.black,
                                     fontWeight: FontWeight.w700, fontSize: 18)
                             ),
                           ),

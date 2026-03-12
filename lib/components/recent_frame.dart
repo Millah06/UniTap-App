@@ -1,7 +1,10 @@
 import 'package:everywhere/constraints/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
+import 'formatters.dart';
 
 class RecentFrame extends StatelessWidget {
 
@@ -24,38 +27,61 @@ class RecentFrame extends StatelessWidget {
         default: return Icons.receipt;
       }
     }
+
+    IconData getIcon() {
+      IconData theIcon;
+      beneficiary.contains('Airtime') ? theIcon = Icons.phone :
+      beneficiary.contains('Data') ? theIcon = Icons.wifi :
+      beneficiary.contains('Candidates') ? theIcon = FontAwesomeIcons.graduationCap :
+      beneficiary.contains('Electricity') ? theIcon = Icons.bolt_outlined :
+       theIcon = Icons.receipt;
+      return theIcon;
+    }
+
+
     return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [
           Row(
             children: [
-              IconButton(
-                style: IconButton.styleFrom(
-                  backgroundColor: Color(0xFF177E85)
-                ),
-                  onPressed: ( ) {},
-                  icon: Icon(_getTransactionIcon(),)),
+              Transform.scale(
+                scale: 0.9,
+                child: CircleAvatar(
+                    backgroundColor: Color(0xFF177E85),
+                    child: Icon(getIcon(), color: Colors.white,)),
+              ),
               SizedBox(width: 5,),
               Expanded(
-
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('$beneficiary', style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w900, fontSize: 11),),
-                        Text('₦${kFormatter.format(double.tryParse(amount.split(' ').first))}', style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w900),)
+                        Flexible(
+                          child: Text(beneficiary, style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w700, fontSize: 10), softWrap: false,),
+                        ),
+                        Text('₦${kFormatter.format(double.tryParse(amount.split(' ').first))}',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w400, fontSize: 12),)
                       ],
                     ),
+                    SizedBox(height: 3,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(DateFormat('dd MMM yyyy').format(date),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 10),),
-                        Text('successful', style: GoogleFonts.inter(color: kButtonColor),)
+                        Text(MyFormatManager.formatMyDate(date, 'MMMM d, yyyy hh:mm a'),
+                          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 10),),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                            decoration: BoxDecoration(
+                                color: Color(0xFF177E85),
+                                borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Text(status, style:
+                          GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 6),),
+                        )
                       ],
                     )
                   ],
@@ -63,9 +89,11 @@ class RecentFrame extends StatelessWidget {
               )
             ],
           ),
-          Divider()
+          Divider(color: Colors.white54,)
         ],
       ),
     );
   }
 }
+
+

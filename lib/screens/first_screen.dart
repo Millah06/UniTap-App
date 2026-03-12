@@ -4,14 +4,20 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:everywhere/components/bootom_bar.dart';
 import 'package:everywhere/constraints/constants.dart';
 import 'package:everywhere/screens/passcode_login.dart';
+import 'package:everywhere/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/flush_bar_message.dart';
+import '../models/notification_model.dart';
 import '../services/brain.dart';
+import '../services/session_service.dart';
 import 'login_screen.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -81,8 +87,18 @@ class _FirstScreenState extends State<FirstScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/eraser.png'),
-                  height: 90, fit: BoxFit.cover, width: 90,),
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          color:  Colors.white54,
+                          width: 1
+                      ),
+                    image: DecorationImage(image: AssetImage('images/eraser.png'), fit: BoxFit.contain)
+                  ),
+                ),
                 SizedBox(height: 30,),
                 Container(
                   width: 160,
@@ -106,7 +122,7 @@ class _FirstScreenState extends State<FirstScreen> {
                 SizedBox(height: 30,),
                 TextButton(onPressed:  () {_auth(pov.canAuthenticate());},
                     child: Text('Click to log in with Fingerprint',
-                      style: GoogleFonts.inter(color: kButtonColor),)),
+                      style: GoogleFonts.inter(color: kButtonColor, fontWeight: FontWeight.w600),)),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {_auth(pov.canAuthenticate());},
@@ -114,7 +130,8 @@ class _FirstScreenState extends State<FirstScreen> {
                         backgroundColor: Color(0xFF21D3ED),
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 70)
                     ),
-                    child: Text('Verify Fingerprint', style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18)),
+                    child: Text('Verify Fingerprint', style:
+                    GoogleFonts.inter(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18)),
                   ),
                 ),
               ],
@@ -123,17 +140,112 @@ class _FirstScreenState extends State<FirstScreen> {
               children: [
                 Column(
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => PasscodeScreen()));
-                      },
-                      child: Text('Login with Password',
-                        style: GoogleFonts.inter(color: kButtonColor, fontSize: 15, fontWeight: FontWeight.w900),),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => PasscodeScreen()));
+                          },
+                          child: Text('Login with Password',
+                            style: GoogleFonts.inter(color: kButtonColor, fontSize: 15, fontWeight: FontWeight.w900),),
+                        ),
+                        SizedBox(height: 25,),
+                        GestureDetector(
+                          onTap: () async {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                icon: Icon(Icons.logout_sharp, color: kErrorIconColor,),
+                                actionsPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                                title: Text('Switch Account Confirmation', style: kAlertTitle,),
+                                backgroundColor: kCardColor,
+                                shape:
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                content: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('Are you sure, you want Switch Account?',
+                                          style: kAlertContent),
+                                      SizedBox(height: 10),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 4,
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 30),
+                                            side: BorderSide(
+                                                color: kButtonColor
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12)
+                                            ),
+                                          ),
+                                          onPressed: ()  async {
+                                            Navigator.pop(context);
+                                            final prefs = await SharedPreferences.getInstance();
+                                            await FirebaseAuth.instance.signOut();
+                                            await prefs.setBool('isSetupDone', false);
+                                            await Hive.box<AppNotification>('notifications').clear();
+                                            Provider.of<Brain>(context, listen: false).reset();
+                                            Provider.of<SessionProvider>(context, listen: false).logout();
+                                            Navigator.pushAndRemoveUntil(
+                                              context, MaterialPageRoute(builder: (_) => WelcomeScreen()),
+                                                  (route) => false,);
+                                          },
+                                          child: Text('Yes', style: TextStyle(color: Colors.white),)
+                                      ),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+
+                                            backgroundColor: kButtonColor,
+                                            elevation: 4,
+                                            padding: EdgeInsets.symmetric(vertical:
+                                            10, horizontal: 30),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12)
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('No', style: TextStyle(color: Colors.black),)
+                                      ),
+
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.swap_horiz_sharp, color: Colors.white70,),
+                              SizedBox(width: 5,),
+                              Text('Switch Account',
+                                style: GoogleFonts.raleway(color: Colors.white,
+                                    fontSize: 13, fontWeight: FontWeight.w400),),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20,),
+
+                    SizedBox(height: 5,),
                     Divider(indent: 50, endIndent: 50,),
-                    Text('Powered by SkyNest Innovations', style: GoogleFonts.inter(),),
+                    Text('POWERED BY SKYNEST INNOVATIONS', style: GoogleFonts.robotoMono(),),
                   ],
                 )
               ],
